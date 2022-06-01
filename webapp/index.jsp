@@ -10,9 +10,13 @@
         </head>
         
         <body>
-
+	
+		<script>
+		${msg}
+		</script>
         
         <main>
+        
 
             <div class="contenedor__todo">
                 <div class="caja__trasera">

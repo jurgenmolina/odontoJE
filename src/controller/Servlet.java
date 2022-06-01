@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -46,6 +47,7 @@ public class Servlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		String action = request.getServletPath();
 		System.out.println(action);
+		System.out.println("estoy aqui");
 		try {
 		switch(action) {
 			case "/new":
@@ -91,6 +93,7 @@ public class Servlet extends HttpServlet {
 	private void iniciarSesion(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		
+		
 		String usuario = request.getParameter("usuario");
 		String password = request.getParameter("password");
 		
@@ -98,16 +101,19 @@ public class Servlet extends HttpServlet {
 		
 		for(Odontologo e: ods) {
 			
-			if(e.getUsuario().equals(usuario) && e.getPassword().equals(password)) {
+			if(e.getUsuario().equalsIgnoreCase(usuario) && e.getPassword().equals(password)) {
 				Odontologo odontologoActual = odontologoDao.selectUsuario(usuario);
 				request.setAttribute("usuario", odontologoActual);
-				System.out.println(odontologoActual);
 				RequestDispatcher dispatcher = request.getRequestDispatcher("app.jsp");
 				dispatcher.forward(request, response);
+				return;
 			}
 		}
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("#");
+		
+		String msg = "window.alert(\"Datos incorrectos, verifique sus datos.\");";
+		request.setAttribute("msg", msg);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 		dispatcher.forward(request, response);
 		
 	}
