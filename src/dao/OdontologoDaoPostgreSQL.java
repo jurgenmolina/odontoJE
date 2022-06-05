@@ -129,8 +129,7 @@ public class OdontologoDaoPostgreSQL implements OdontologoDao {
 		
 		try {
 			PreparedStatement preparedStatement = (PreparedStatement) conexion.setPreparedStatement(SELECT_ODONTOLOGO_BY_USUARIO);
-			preparedStatement.setString(6, usuario);
-			
+			preparedStatement.setString(1, usuario);
 			ResultSet rs = conexion.query();
 			
 			while(rs.next()) {
@@ -144,7 +143,7 @@ public class OdontologoDaoPostgreSQL implements OdontologoDao {
 			}
 			
 		} catch (SQLException e) {
-			
+			System.out.println("error");
 		}
 		
 		return odontologo;

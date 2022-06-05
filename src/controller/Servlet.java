@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.OdontologoDao;
 import dao.OdontologoDaoFactory;
@@ -47,11 +48,13 @@ public class Servlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		String action = request.getServletPath();
 		System.out.println(action);
-		System.out.println("estoy aqui");
 		try {
 		switch(action) {
-			case "/new":
-				showNewForm(request, response);
+			case "/login":
+				iniciarSesion(request, response);
+				break;
+			case "/dash":
+				iniciarDashBoard(request, response);
 				break;
 			case "/insert":
 				insertarUsuario(request, response);
@@ -65,9 +68,8 @@ public class Servlet extends HttpServlet {
 			case "/update":
 				actualizarUsuario(request, response);
 				break;
-			case "/iniciar":
-				iniciarSesion(request, response);
-				break;
+			
+			
 			default:
 				iniciarSesion(request, response);
 				break;
@@ -103,25 +105,29 @@ public class Servlet extends HttpServlet {
 			
 			if(e.getUsuario().equalsIgnoreCase(usuario) && e.getPassword().equals(password)) {
 				Odontologo odontologoActual = odontologoDao.selectUsuario(usuario);
-				request.setAttribute("usuario", odontologoActual);
-				RequestDispatcher dispatcher = request.getRequestDispatcher("app.jsp");
-				dispatcher.forward(request, response);
+				HttpSession misession= request.getSession(true);
+				misession.setAttribute("odontologo",odontologoActual); 
+				response.sendRedirect("dash");
 				return;
 			}
 		}
 		
-		
-		String msg = "window.alert(\"Datos incorrectos, verifique sus datos.\");";
-		request.setAttribute("msg", msg);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
-		dispatcher.forward(request, response);
+	        RequestDispatcher dispatcher=request.getRequestDispatcher( "login.jsp" );  
+	        dispatcher.include(request, response);  
 		
 	}
 	
 	
-	private void showNewForm(HttpServletRequest request, HttpServletResponse response) 
+	
+	private void iniciarDashBoard(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("usuario.jsp");
+		
+		HttpSession misession= (HttpSession) request.getSession();
+		 
+		Odontologo odontologo= (Odontologo) misession.getAttribute("odontologo");
+		
+		request.setAttribute("odontologo", odontologo);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("dashboard.jsp");
 		dispatcher.forward(request, response);
 	}
 	
