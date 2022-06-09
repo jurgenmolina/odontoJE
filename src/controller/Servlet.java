@@ -25,7 +25,7 @@ import modelo.Paciente;
 
 
 /**
- * Servlet implementation class UsuarioServlet
+ * Servlet implementation class Servlet
  */
 @WebServlet("/")
 public class Servlet extends HttpServlet {
@@ -60,7 +60,7 @@ public class Servlet extends HttpServlet {
 			case "/login":
 				iniciarSesion(request, response);
 				break;
-			case "/dash":
+			case "/inicio":
 				iniciarDashBoard(request, response);
 				break;
 			case "/cerrar":
@@ -75,6 +75,16 @@ public class Servlet extends HttpServlet {
 			case "/insertarPaciente":
 				insertarPaciente(request, response);
 				break;
+			case "/editPaciente":
+				showEditPaciente(request, response);
+				break;
+			case "/actualizarPaciente":
+				actualizarPaciente(request, response);
+				break;
+				
+				
+				
+				
 			
 			
 			default:
@@ -99,6 +109,53 @@ public class Servlet extends HttpServlet {
 		doGet(request, response);
 	}
 	
+	private void actualizarPaciente(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, SQLException, IOException {
+		
+		int id = Integer.parseInt(request.getParameter("id"));
+		String tipodocumento = request.getParameter("tipodocumento");
+		String documento = request.getParameter("documento");
+		String nombre = request.getParameter("nombre");
+		String apellido = request.getParameter("apellido");
+		String email = request.getParameter("email");
+		String telefono = request.getParameter("telefono");
+		int odonto = Integer.parseInt(request.getParameter("id_odontologo"));
+		Odontologo odontologo = odontologoDao.select(odonto);
+		
+		Paciente paciente = new Paciente (id, tipodocumento, documento, nombre, apellido, email, telefono ,odontologo);
+		
+		pacienteDao.update(paciente);
+		
+		response.sendRedirect("gestionPaciente");
+		
+		
+	}
+	
+	private void showEditPaciente(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		
+		int id = Integer.parseInt(request.getParameter("id"));
+		
+		Paciente pacienteActual = pacienteDao.select(id);
+		
+		HttpSession misession= (HttpSession) request.getSession();
+		 
+		Odontologo odontologo= (Odontologo) misession.getAttribute("odontologo");
+		
+		
+		
+		List <Object> list = new ArrayList<>();
+		list.add(odontologo);
+		list.add(pacienteActual);
+		
+		request.setAttribute("list", list);
+		
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("actualizarPaciente.jsp");
+		dispatcher.forward(request, response);
+		
+	}
+	
 	private void iniciarSesion(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		
@@ -114,12 +171,12 @@ public class Servlet extends HttpServlet {
 				Odontologo odontologoActual = odontologoDao.selectUsuario(usuario);
 				HttpSession misession= request.getSession(true);
 				misession.setAttribute("odontologo",odontologoActual); 
-				response.sendRedirect("dash");
+				response.sendRedirect("inicio");
 				return;
 			}
 		}
 		
-	        RequestDispatcher dispatcher=request.getRequestDispatcher( "login.jsp" );  
+	        RequestDispatcher dispatcher=request.getRequestDispatcher( "index.jsp" );  
 	        dispatcher.include(request, response);  
 		
 	}
@@ -173,13 +230,25 @@ public class Servlet extends HttpServlet {
 		
 		pacienteDao.insert(paciente);
 		
-		response.sendRedirect("insertarPaciente");
+		response.sendRedirect("gestionPaciente");
 		
 	}
 	
 	private void gestionPaciente(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, SQLException, IOException {
 		
+		
+		HttpSession misession= (HttpSession) request.getSession();
+		 
+		Odontologo odontologo= (Odontologo) misession.getAttribute("odontologo");
+		
+		List <Paciente> listPaciente = pacienteDao.selectAllOdontologo(odontologo.getId());
+		
+		List <Object> list = new ArrayList<>();
+		list.add(odontologo);
+		list.add(listPaciente);
+		
+		request.setAttribute("list", list);
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("gestionPacientes.jsp");
 		dispatcher.forward(request, response);
@@ -194,10 +263,7 @@ public class Servlet extends HttpServlet {
 		 
 		Odontologo odontologo= (Odontologo) misession.getAttribute("odontologo");
 		
-		List <Object> list = new ArrayList<>();
-		list.add(odontologo);
-		
-		request.setAttribute("list", list);
+		request.setAttribute("odontologo", odontologo);
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("registrarPaciente.jsp");
 		dispatcher.forward(request, response);

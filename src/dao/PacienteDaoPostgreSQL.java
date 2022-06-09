@@ -17,7 +17,7 @@ public class PacienteDaoPostgreSQL implements PacienteDao {
 	
 	private static final String INSERT_PACIENTE_SQL = "INSERT INTO paciente (tipodocumento, documento, nombre, apellido, email, telefono, id_odontologo) VALUES (?, ?, ?, ?, ?, ?, ?);";
 	private static final String DELETE_PACIENTE_SQL = "DELETE FROM paciente WHERE id = ?;";
-	private static final String UPDATE_PACIENTE_SQL = "UPDATE paciente SET tipodocumento = ?, documento = ?, nombre = ?, apellido = ?, email = ?, telefono = ? , foto = ? , id_odontologo = ?  WHERE id = ?;";
+	private static final String UPDATE_PACIENTE_SQL = "UPDATE paciente SET tipodocumento = ?, documento = ?, nombre = ?, apellido = ?, email = ?, telefono = ? , id_odontologo = ?  WHERE id = ?;";
 	private static final String SELECT_PACIENTE_BY_ID = "SELECT * FROM paciente WHERE id = ?;";
 	private static final String SELECT_PACIENTE_BY_ODONTOLOGO = "SELECT * FROM paciente WHERE id_odontologo = ?;";
 	private static final String SELECT_ALL_PACIENTES = "SELECT * FROM paciente;";
@@ -65,12 +65,11 @@ public class PacienteDaoPostgreSQL implements PacienteDao {
 			preparedStatement.setString(4, paciente.getApellido());
 			preparedStatement.setString(5, paciente.getEmail());
 			preparedStatement.setString(6, paciente.getTelefono());
-			preparedStatement.setString(7, paciente.getFoto());
-			preparedStatement.setInt(8, paciente.getOdontologo().getId());
-			preparedStatement.setInt(9, paciente.getId());
+			preparedStatement.setInt(7, paciente.getOdontologo().getId());
+			preparedStatement.setInt(8, paciente.getId());
 			conexion.execute();
 		} catch (SQLException e) {
-			
+			System.out.println("error");
 		}
 	}
 	

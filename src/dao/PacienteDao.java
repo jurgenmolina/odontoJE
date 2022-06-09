@@ -10,6 +10,7 @@ public interface PacienteDao {
 	public void insert(Paciente user) throws SQLException;
 	public Paciente select(int id);
 	public Paciente selectOdontologo(int id_odontologo);
+	public List < Paciente > selectAllOdontologo(int id);
 	public List < Paciente > selectAll();
 	public void delete(int id) throws SQLException;
 	public void update(Paciente user) throws SQLException;

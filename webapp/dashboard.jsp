@@ -19,6 +19,10 @@
 			<form action="gestionPaciente" method="post">
 			    <button name="gestion">Gestion Pacientes</button>
 			</form>
+			<br>
+			<form action="gestionCitas" method="post">
+			    <button name="gestion">Gestion Citas</button>
+			</form>
         
 </body>
   

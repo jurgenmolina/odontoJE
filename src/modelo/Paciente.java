@@ -59,6 +59,21 @@ public class Paciente implements Serializable {
 		this.telefono = telefono;
 		this.odontologo = odontologo;
 	}
+
+	public Paciente(Integer id, String tipodocumento, String documento, String nombre, String apellido, String email,
+			String telefono, Odontologo odontologo) {
+		super();
+		this.id = id;
+		this.tipodocumento = tipodocumento;
+		this.documento = documento;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.email = email;
+		this.telefono = telefono;
+		this.odontologo = odontologo;
+	}
+	
+	
 	
 	
 	

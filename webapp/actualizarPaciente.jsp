@@ -30,48 +30,51 @@
                     <div class="card-body">
 
                       
-                       
-                            <form action="insertarPaciente" method="post">
-                     
-                            <h2>
-                                    Agregar nuevo paciente
-                            </h2>
+                            <form action="actualizarPaciente" method="post">
+                        
 
                     
+                            <h2>
+                                    Editar paciente
+                            </h2>
+
+                        <c:if test="${list.get(1) != null}">
+                            <input type="hidden" name="id" value="<c:out value='${list.get(1).id}' />" />
+                        </c:if>
                         
                         <fieldset class="form-group">
-                            <label>Tipo Documento</label> <input type="text" class="form-control" name="tipodocumento" required="required">
+                            <label>Tipo Documento</label> <input type="text" value="<c:out value='${list.get(1).tipodocumento}' />" class="form-control" name="tipodocumento" required="required">
                         </fieldset>
                         
                         <fieldset class="form-group">
-                            <label>Documento</label> <input type="text" class="form-control" name="documento" required="required">
+                            <label>Documento</label> <input type="text" value="<c:out value='${list.get(1).documento}' />" class="form-control" name="documento" required="required">
                         </fieldset>
                         
 						<fieldset class="form-group">
-                            <label>Nombre</label> <input type="text" class="form-control" name="nombre" required="required">
+                            <label>Nombre</label> <input type="text" value="<c:out value='${list.get(1).nombre}' />" class="form-control" name="nombre" required="required">
                         </fieldset>
                         
                        	<fieldset class="form-group">
-                            <label>Apellido</label> <input type="text" class="form-control" name="apellido" required="required">
+                            <label>Apellido</label> <input type="text" value="<c:out value='${list.get(1).apellido}' />" class="form-control" name="apellido" required="required">
                         </fieldset>
                         
                         <fieldset class="form-group">
-                            <label>Email</label> <input type="text" class="form-control" name="email" required="required">
+                            <label>Email</label> <input type="text" value="<c:out value='${list.get(1).email}' />" class="form-control" name="email" required="required">
                         </fieldset>
                         
                         <fieldset class="form-group">
-                            <label>Telefono</label> <input type="text"  class="form-control" name="telefono" required="required">
+                            <label>Telefono</label> <input type="text" value="<c:out value='${list.get(1).telefono}' />" class="form-control" name="telefono" required="required">
                         </fieldset>
                         
                         <fieldset class="form-group">
-                            <label>Foto</label> <input type="text" class="form-control" name="foto" >
+                            <label>Foto</label> <input type="text" value="<c:out value='${list.get(1).foto}' />" class="form-control" name="foto" >
                         </fieldset>
                         
                         <fieldset class="form-group">
-                            <label>Odontologo</label> <input type="text" value="<c:out value='${odontologo.id}' />" class="form-control" name="id_odontologo" readonly >
+                            <label>Odontologo</label> <input type="text" value="<c:out value='${list.get(0).id}' />" class="form-control" name="id_odontologo" readonly >
                         </fieldset>
           
-                        <button type="submit" class="btn btn-success" onclick="saludo()">Guardar</button>
+                        <button type="submit" class="btn btn-success" onclick="saludo()">Actualizar</button>
                         </form>
                     </div>
                 </div>
