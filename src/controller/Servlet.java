@@ -81,12 +81,6 @@ public class Servlet extends HttpServlet {
 			case "/actualizarPaciente":
 				actualizarPaciente(request, response);
 				break;
-				
-				
-				
-				
-			
-			
 			default:
 				showLogin(request, response);
 				break;
@@ -176,7 +170,7 @@ public class Servlet extends HttpServlet {
 			}
 		}
 		
-	        RequestDispatcher dispatcher=request.getRequestDispatcher( "index.jsp" );  
+	        RequestDispatcher dispatcher=request.getRequestDispatcher( "login.jsp" );  
 	        dispatcher.include(request, response);  
 		
 	}
@@ -190,8 +184,11 @@ public class Servlet extends HttpServlet {
 		 
 		Odontologo odontologo= (Odontologo) misession.getAttribute("odontologo");
 		
-		request.setAttribute("odontologo", odontologo);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("dashboard.jsp");
+		List <Paciente> listPaciente = pacienteDao.selectAllOdontologo(odontologo.getId());
+		
+		
+		request.setAttribute("listPaciente", listPaciente);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 		dispatcher.forward(request, response);
 	}
 	
@@ -201,7 +198,7 @@ public class Servlet extends HttpServlet {
 		HttpSession misession= (HttpSession) request.getSession();
 		
 		misession.invalidate();
-		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
 		dispatcher.forward(request, response);
 		
 	}
@@ -244,13 +241,9 @@ public class Servlet extends HttpServlet {
 		
 		List <Paciente> listPaciente = pacienteDao.selectAllOdontologo(odontologo.getId());
 		
-		List <Object> list = new ArrayList<>();
-		list.add(odontologo);
-		list.add(listPaciente);
+		request.setAttribute("listPaciente", listPaciente);
 		
-		request.setAttribute("list", list);
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("gestionPacientes.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 		dispatcher.forward(request, response);
 		
 		
@@ -265,7 +258,7 @@ public class Servlet extends HttpServlet {
 		
 		request.setAttribute("odontologo", odontologo);
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("registrarPaciente.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("registro.jsp");
 		dispatcher.forward(request, response);
 		
 	}

@@ -76,11 +76,11 @@
 			
 			</li>
 			
-			<li class="active" >
+			<li  >
 			<a href="inicio"><i class="fe fe-users"></i> <span>Lista de Pacientes</span></a>
 			</li>
 			
-			<li>
+			<li class="active">
 			<a href="registrarPaciente"><i class="fe fe-file"></i> <span>Registrar paciente</span></a>
 			</li>
 			
@@ -104,71 +104,66 @@
 			<div class="page-header">
 				<div class="row">
 					<div class="col-sm-12">
-						<h3 class="page-title">Buscar paciente</h3>
+						<h3 class="page-title">Nuevo paciente</h3>
 						<ul class="breadcrumb">
-						<li class="breadcrumb-item"><a href="index.html">PROXIMAMENTE</a></li>
-						<li class="breadcrumb-item active">BUSCAR</li>
+						<li class="breadcrumb-item"><a href="index.html">X</a></li>
+						<li class="breadcrumb-item active">X</li>
 						</ul>
 					</div>
 				</div>
 			</div>
 	
-		<div class="row">
-			<div class="container">
-                    <h3 class="text-center">Lista de Pacientes</h3>
-                    <hr>
-                    
-                    <br>
-                    
-                    <br>
-                    <table class="table table-bordered" id="tablePaciente">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Tipo Documento</th>
-                                <th>Documento</th>
-                                <th>Nombre</th>
-                                <th>Apellido</th>
-                                <th>Email</th>
-                                <th>Telefono</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!--   for (Todo todo: todos) {  -->
-                            <c:forEach var="paciente" items="${listPaciente}">
+			<div class="row">
+				<div class="card">
+                    <div class="card-body">
 
-                                <tr>
-                                    <td>
-                                        <c:out value="${paciente.id}" />
-                                    </td>
-                                    <td>
-                                        <c:out value="${paciente.tipodocumento}" />
-                                    </td>
-                                    <td>
-                                        <c:out value="${paciente.documento}" />
-                                    </td>
-                                    <td>
-                                        <c:out value="${paciente.nombre}" />
-                                    </td>
-                                    <td>
-                                        <c:out value="${paciente.apellido}" />
-                                    </td>
-                                    <td>
-                                        <c:out value="${paciente.email}" />
-                                    </td>
-                                    <td>
-                                        <c:out value="${paciente.telefono}" />
-                                    </td>
-                                    
-                                    <td><a href="editPaciente?id=<c:out value='${paciente.id}' />">Editar</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="eliminarPaciente?id=<c:out value='${paciente.id}' />">Eliminar</a></td>
-                                </tr>
-                            </c:forEach>
-                            <!-- } -->
-                        </tbody>
+                      
+                       
+                            <form action="insertarPaciente" method="post">
+                     
+                            <h2>
+                                    Agregar nuevo paciente
+                            </h2>
 
-                    </table>
+                    
+                        
+                        <fieldset class="form-group">
+                            <label>Tipo Documento</label> <input type="text" class="form-control" name="tipodocumento" required="required">
+                        </fieldset>
+                        
+                        <fieldset class="form-group">
+                            <label>Documento</label> <input type="text" class="form-control" name="documento" required="required">
+                        </fieldset>
+                        
+						<fieldset class="form-group">
+                            <label>Nombre</label> <input type="text" class="form-control" name="nombre" required="required">
+                        </fieldset>
+                        
+                       	<fieldset class="form-group">
+                            <label>Apellido</label> <input type="text" class="form-control" name="apellido" required="required">
+                        </fieldset>
+                        
+                        <fieldset class="form-group">
+                            <label>Email</label> <input type="text" class="form-control" name="email" required="required">
+                        </fieldset>
+                        
+                        <fieldset class="form-group">
+                            <label>Telefono</label> <input type="text"  class="form-control" name="telefono" required="required">
+                        </fieldset>
+                        
+                        <fieldset class="form-group">
+                            <label>Foto</label> <input type="text" class="form-control" name="foto" >
+                        </fieldset>
+                        
+                        <fieldset class="form-group">
+                            <label>Odontologo</label> <input type="text" value="<c:out value='${odontologo.id}' />" class="form-control" name="id_odontologo" readonly >
+                        </fieldset>
+          
+                        <button type="submit" class="btn btn-success" onclick="saludo()">Guardar</button>
+                        </form>
+                    </div>
                 </div>
-		</div>
+			</div>
 		</div>
 	</div>
 
