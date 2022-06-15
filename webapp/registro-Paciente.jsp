@@ -89,7 +89,7 @@
 			</li>
 			
 			<li>
-			<a href=""><i class="fe fe-edit"></i> <span>Agendar Cita</span></a>
+			<a href="#"><i class="fe fe-edit"></i> <span>Agendar Cita</span></a>
 			</li>
 			
 			<li>
@@ -193,10 +193,7 @@
 					<div class="form-group row">
 						<label for="exampleFormControlFile1">Foto del paciente (Opcional)</label>
 						<input type="file" class="form-control-file" name="foto" id="exampleFormControlFile1">
-					</div>
-					
-					
-						
+					</div>	
 					</div>
 					</div>
 										
@@ -208,22 +205,16 @@
 					<input type="date" id="date" value="2000-06-01" class="form-control" name="fechanacimiento">
 					<span class="form-text text-muted">dd/mm/yyyy</span>
 					</div>
-					
-					
 					</div>
 					
 					<div class="col-xl-6">
-					
 					<br>
-					
-					
 					<div class="form-group row">
 					<label class="col-lg-3 col-form-label">Odontologo</label>
 					<div class="col-lg-9">
 					<input type="text" class="form-control" value="<c:out value='${odontologo.id}' />" name = "id_odontologo"  readonly="readonly">
 					</div>
 					</div>
-					
 					</div>
 					</div>
 					
