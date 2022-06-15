@@ -16,9 +16,9 @@
         <body>
 
             <header>
-                <nav class="navbar navbar-expand-md navbar-dark" style="background-color: #01579B">
+                <nav class="navbar navbar-expand-md navbar-dark" style="background-color: #800080">
                     <div>
-                        <a href="<%=request.getContextPath()%>/gestionPaciente" class="navbar-brand"> Volver al Inicio </a>
+                        <a href="<%=request.getContextPath()%>/inicio" class="navbar-brand"> ir al Inicio  </a>
                     </div>
 
                     
@@ -38,40 +38,40 @@
                                     Editar paciente
                             </h2>
 
-                        <c:if test="${list.get(1) != null}">
-                            <input type="hidden" name="id" value="<c:out value='${list.get(1).id}' />" />
+                        <c:if test="${paciente != null}">
+                            <input type="hidden" name="id" value="<c:out value='${paciente.id}' />" />
                         </c:if>
                         
                         <fieldset class="form-group">
-                            <label>Tipo Documento</label> <input type="text" value="<c:out value='${list.get(1).tipodocumento}' />" class="form-control" name="tipodocumento" required="required">
+                            <label>Tipo Documento</label> <input type="text" value="<c:out value='${paciente.tipodocumento}' />" class="form-control" name="tipodocumento" required="required">
                         </fieldset>
                         
                         <fieldset class="form-group">
-                            <label>Documento</label> <input type="text" value="<c:out value='${list.get(1).documento}' />" class="form-control" name="documento" required="required">
+                            <label>Documento</label> <input type="text" value="<c:out value='${paciente.documento}' />" class="form-control" name="documento" required="required">
                         </fieldset>
                         
 						<fieldset class="form-group">
-                            <label>Nombre</label> <input type="text" value="<c:out value='${list.get(1).nombre}' />" class="form-control" name="nombre" required="required">
+                            <label>Nombre</label> <input type="text" value="<c:out value='${paciente.nombre}' />" class="form-control" name="nombre" required="required">
                         </fieldset>
                         
                        	<fieldset class="form-group">
-                            <label>Apellido</label> <input type="text" value="<c:out value='${list.get(1).apellido}' />" class="form-control" name="apellido" required="required">
+                            <label>Apellido</label> <input type="text" value="<c:out value='${paciente.apellido}' />" class="form-control" name="apellido" required="required">
                         </fieldset>
                         
                         <fieldset class="form-group">
-                            <label>Email</label> <input type="text" value="<c:out value='${list.get(1).email}' />" class="form-control" name="email" required="required">
+                            <label>Email</label> <input type="text" value="<c:out value='${paciente.email}' />" class="form-control" name="email" required="required">
                         </fieldset>
                         
                         <fieldset class="form-group">
-                            <label>Telefono</label> <input type="text" value="<c:out value='${list.get(1).telefono}' />" class="form-control" name="telefono" required="required">
+                            <label>Telefono</label> <input type="text" value="<c:out value='${paciente.telefono}' />" class="form-control" name="telefono" required="required">
                         </fieldset>
                         
                         <fieldset class="form-group">
-                            <label>Foto</label> <input type="text" value="<c:out value='${list.get(1).foto}' />" class="form-control" name="foto" >
+                            <label>Foto</label> <input type="text" value="<c:out value='${paciente.foto}' />" class="form-control" name="foto" >
                         </fieldset>
                         
                         <fieldset class="form-group">
-                            <label>Odontologo</label> <input type="text" value="<c:out value='${list.get(0).id}' />" class="form-control" name="id_odontologo" readonly >
+                            <label>Odontologo</label> <input type="text" value="<c:out value='${odontologo.id}' />" class="form-control" name="id_odontologo" readonly >
                         </fieldset>
           
                         <button type="submit" class="btn btn-success" onclick="saludo()">Actualizar</button>

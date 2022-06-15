@@ -63,11 +63,17 @@ public class Servlet extends HttpServlet {
 			case "/inicio":
 				iniciarDashBoard(request, response);
 				break;
-			case "/cerrar":
+			case "/cerrarSesion":
 				cerrarSesion(request, response);
 				break;
-			case "/gestionPaciente":
-				gestionPaciente(request, response);
+			case "/editarPaciente":
+				editarPaciente(request, response);
+				break;
+			case "/actualizarPaciente":
+				actualizarPaciente(request, response);
+				break;
+			case "/eliminarPaciente":
+				eliminarPaciente(request, response);
 				break;
 			case "/registrarPaciente":
 				registrarPaciente(request, response);
@@ -75,12 +81,10 @@ public class Servlet extends HttpServlet {
 			case "/insertarPaciente":
 				insertarPaciente(request, response);
 				break;
-			case "/editPaciente":
-				showEditPaciente(request, response);
-				break;
-			case "/actualizarPaciente":
-				actualizarPaciente(request, response);
-				break;
+			
+			
+			
+				
 			default:
 				showLogin(request, response);
 				break;
@@ -120,33 +124,35 @@ public class Servlet extends HttpServlet {
 		
 		pacienteDao.update(paciente);
 		
-		response.sendRedirect("gestionPaciente");
+		response.sendRedirect("inicio");
 		
 		
 	}
 	
-	private void showEditPaciente(HttpServletRequest request, HttpServletResponse response) 
+	private void editarPaciente(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		
 		int id = Integer.parseInt(request.getParameter("id"));
 		
 		Paciente pacienteActual = pacienteDao.select(id);
 		
-		HttpSession misession= (HttpSession) request.getSession();
-		 
-		Odontologo odontologo= (Odontologo) misession.getAttribute("odontologo");
+		request.setAttribute("paciente", pacienteActual);
 		
-		
-		
-		List <Object> list = new ArrayList<>();
-		list.add(odontologo);
-		list.add(pacienteActual);
-		
-		request.setAttribute("list", list);
-		
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("actualizarPaciente.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("editar-Paciente.jsp");
 		dispatcher.forward(request, response);
+		
+	}
+	
+	private void eliminarPaciente(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, SQLException, IOException {
+		
+		int id = Integer.parseInt(request.getParameter("id"));
+		
+		pacienteDao.delete(id);
+		
+		response.sendRedirect("inicio");
+		
+		
 		
 	}
 	
@@ -206,7 +212,7 @@ public class Servlet extends HttpServlet {
 	private void showLogin(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
 		dispatcher.forward(request, response);
 		
 	}
@@ -227,38 +233,14 @@ public class Servlet extends HttpServlet {
 		
 		pacienteDao.insert(paciente);
 		
-		response.sendRedirect("gestionPaciente");
-		
-	}
-	
-	private void gestionPaciente(HttpServletRequest request, HttpServletResponse response) 
-			throws ServletException, SQLException, IOException {
-		
-		
-		HttpSession misession= (HttpSession) request.getSession();
-		 
-		Odontologo odontologo= (Odontologo) misession.getAttribute("odontologo");
-		
-		List <Paciente> listPaciente = pacienteDao.selectAllOdontologo(odontologo.getId());
-		
-		request.setAttribute("listPaciente", listPaciente);
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
-		dispatcher.forward(request, response);
-		
+		response.sendRedirect("inicio");
 		
 	}
 	
 	private void registrarPaciente(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, SQLException, IOException {
 		
-		HttpSession misession= (HttpSession) request.getSession();
-		 
-		Odontologo odontologo= (Odontologo) misession.getAttribute("odontologo");
-		
-		request.setAttribute("odontologo", odontologo);
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("registro.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("registro-Paciente.jsp");
 		dispatcher.forward(request, response);
 		
 	}
