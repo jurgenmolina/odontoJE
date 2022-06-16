@@ -1,6 +1,9 @@
 package controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -9,12 +12,13 @@ import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
+import javax.servlet.http.Part;
 
 import dao.OdontologoDao;
 import dao.OdontologoDaoFactory;
@@ -28,6 +32,7 @@ import modelo.Paciente;
  * Servlet implementation class Servlet
  */
 @WebServlet("/")
+@MultipartConfig
 public class Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -82,7 +87,7 @@ public class Servlet extends HttpServlet {
 				insertarPaciente(request, response);
 				break;
 			
-			
+				
 			
 				
 			default:
@@ -106,6 +111,7 @@ public class Servlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
+
 	
 	private void actualizarPaciente(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, SQLException, IOException {
@@ -116,11 +122,14 @@ public class Servlet extends HttpServlet {
 		String nombre = request.getParameter("nombre");
 		String apellido = request.getParameter("apellido");
 		String email = request.getParameter("email");
+		String foto = request.getParameter("foto");
+		String fechanacimiento = request.getParameter("fechanacimiento");
+		String genero = request.getParameter("genero");
 		String telefono = request.getParameter("telefono");
 		int odonto = Integer.parseInt(request.getParameter("id_odontologo"));
 		Odontologo odontologo = odontologoDao.select(odonto);
 		
-		Paciente paciente = new Paciente (id, tipodocumento, documento, nombre, apellido, email, telefono ,odontologo);
+		Paciente paciente = new Paciente (id, tipodocumento, documento, nombre, apellido, email, telefono , foto, odontologo, fechanacimiento, genero);
 		
 		pacienteDao.update(paciente);
 		
@@ -192,7 +201,6 @@ public class Servlet extends HttpServlet {
 		
 		List <Paciente> listPaciente = pacienteDao.selectAllOdontologo(odontologo.getId());
 		
-		
 		request.setAttribute("listPaciente", listPaciente);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 		dispatcher.forward(request, response);
@@ -226,13 +234,35 @@ public class Servlet extends HttpServlet {
 		String apellido = request.getParameter("apellido");
 		String email = request.getParameter("email");
 		String telefono = request.getParameter("telefono");
+		String fechanacimiento = request.getParameter("fechanacimiento");
+		String genero = request.getParameter("genero");
 		int odonto = Integer.parseInt(request.getParameter("id_odontologo"));
 		Odontologo odontologo = odontologoDao.select(odonto);
+		PrintWriter out = response.getWriter();
+		String nomb = request.getParameter("foto");
+		if(!nomb.isEmpty()) {
+			Part arch = request.getPart("archivo");
+			InputStream is = arch.getInputStream();
+			File f = new File("C:/Users/Jurgen/Documents/Eclipse/OdontoJE/webapp/assets/img/profiles/"+nomb);
+			FileOutputStream ous = new FileOutputStream(f);
+			int dato = is.read();
+			while(dato != -1){
+				ous.write(dato);
+				dato = is.read();
+			}
+			
+			ous.close();
+			is.close();
+			
+			Paciente paciente = new Paciente (tipodocumento, documento, nombre, apellido, email, telefono, nomb ,odontologo, fechanacimiento, genero);
+			pacienteDao.insert(paciente);
+			response.sendRedirect("inicio");
+			return;
+		}
 		
-		Paciente paciente = new Paciente (tipodocumento, documento, nombre, apellido, email, telefono ,odontologo);
 		
+		Paciente paciente = new Paciente (tipodocumento, documento, nombre, apellido, email, telefono ,odontologo, fechanacimiento, genero);
 		pacienteDao.insert(paciente);
-		
 		response.sendRedirect("inicio");
 		
 	}

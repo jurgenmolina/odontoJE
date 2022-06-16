@@ -85,7 +85,8 @@ public class OdontologoDaoPostgreSQL implements OdontologoDao {
 				String telefono = rs.getString("telefono");
 				String usuario = rs.getString("usuario");
 				String password = rs.getString("password");
-				odontologos.add(new Odontologo(id, documento, nombre, email,telefono,usuario,password));
+				String foto = rs.getString("foto");
+				odontologos.add(new Odontologo(id, documento, nombre, email,telefono,usuario,password, foto));
 			}
 			
 		} catch (SQLException e) {
@@ -113,7 +114,8 @@ public class OdontologoDaoPostgreSQL implements OdontologoDao {
 				String telefono = rs.getString("telefono");
 				String usuario = rs.getString("usuario");
 				String password = rs.getString("password");
-				odontologo = new Odontologo(id, documento, nombre, email,telefono,usuario,password);
+				String foto = rs.getString("foto");
+				odontologo = new Odontologo(id, documento, nombre, email,telefono,usuario,password,foto);
 			}
 			
 		} catch (SQLException e) {
@@ -139,7 +141,8 @@ public class OdontologoDaoPostgreSQL implements OdontologoDao {
 				String email = rs.getString("email");
 				String telefono = rs.getString("telefono");
 				String password = rs.getString("password");
-				odontologo = new Odontologo(id, documento, nombre, email,telefono,usuario,password);
+				String foto = rs.getString("foto");
+				odontologo = new Odontologo(id, documento, nombre, email,telefono,usuario,password, foto);
 			}
 			
 		} catch (SQLException e) {

@@ -28,8 +28,11 @@ public class Odontologo implements Serializable {
 	private String usuario;
 	
 	private String password;
+	
+	private String foto;
 
-	public Odontologo(String documento, String nombre, String email, String telefono, String usuario, String password) {
+	public Odontologo(String documento, String nombre, String email, String telefono, String usuario, String password,
+			String foto) {
 		super();
 		this.documento = documento;
 		this.nombre = nombre;
@@ -37,7 +40,10 @@ public class Odontologo implements Serializable {
 		this.telefono = telefono;
 		this.usuario = usuario;
 		this.password = password;
+		this.foto = foto;
 	}
+
+	
 	
 	
 	

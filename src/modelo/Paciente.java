@@ -34,9 +34,13 @@ public class Paciente implements Serializable {
 	private String foto;
 	
 	private Odontologo odontologo;
+	
+	private String fechanacimiento;
+	
+	private String genero;
 
 	public Paciente(String tipodocumento, String documento, String nombre, String apellido, String email,
-			String telefono, String foto, Odontologo odontologo) {
+			String telefono, String foto, Odontologo odontologo, String fechanacimiento, String genero) {
 		super();
 		this.tipodocumento = tipodocumento;
 		this.documento = documento;
@@ -46,10 +50,12 @@ public class Paciente implements Serializable {
 		this.telefono = telefono;
 		this.foto = foto;
 		this.odontologo = odontologo;
+		this.fechanacimiento = fechanacimiento;
+		this.genero = genero;
 	}
 
 	public Paciente(String tipodocumento, String documento, String nombre, String apellido, String email,
-			String telefono, Odontologo odontologo) {
+			String telefono, Odontologo odontologo, String fechanacimiento, String genero) {
 		super();
 		this.tipodocumento = tipodocumento;
 		this.documento = documento;
@@ -58,21 +64,12 @@ public class Paciente implements Serializable {
 		this.email = email;
 		this.telefono = telefono;
 		this.odontologo = odontologo;
-	}
-
-	public Paciente(Integer id, String tipodocumento, String documento, String nombre, String apellido, String email,
-			String telefono, Odontologo odontologo) {
-		super();
-		this.id = id;
-		this.tipodocumento = tipodocumento;
-		this.documento = documento;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.email = email;
-		this.telefono = telefono;
-		this.odontologo = odontologo;
+		this.fechanacimiento = fechanacimiento;
+		this.genero = genero;
 	}
 	
+	
+
 	
 	
 	

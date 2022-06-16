@@ -15,9 +15,9 @@ public class PacienteDaoPostgreSQL implements PacienteDao {
 	
 	private ConexionPostgreSQL conexion;
 	
-	private static final String INSERT_PACIENTE_SQL = "INSERT INTO paciente (tipodocumento, documento, nombre, apellido, email, telefono, id_odontologo) VALUES (?, ?, ?, ?, ?, ?, ?);";
+	private static final String INSERT_PACIENTE_SQL = "INSERT INTO paciente (tipodocumento, documento, nombre, apellido, email, telefono, id_odontologo, foto, fechanacimiento, genero) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?);";
 	private static final String DELETE_PACIENTE_SQL = "DELETE FROM paciente WHERE id = ?;";
-	private static final String UPDATE_PACIENTE_SQL = "UPDATE paciente SET tipodocumento = ?, documento = ?, nombre = ?, apellido = ?, email = ?, telefono = ? , id_odontologo = ?  WHERE id = ?;";
+	private static final String UPDATE_PACIENTE_SQL = "UPDATE paciente SET tipodocumento = ?, documento = ?, nombre = ?, apellido = ?, email = ?, telefono = ? , id_odontologo = ? , foto = ? , fechanacimiento = ? , genero = ?  WHERE id = ?;";
 	private static final String SELECT_PACIENTE_BY_ID = "SELECT * FROM paciente WHERE id = ?;";
 	private static final String SELECT_PACIENTE_BY_ODONTOLOGO = "SELECT * FROM paciente WHERE id_odontologo = ?;";
 	private static final String SELECT_ALL_PACIENTES = "SELECT * FROM paciente;";
@@ -39,9 +39,13 @@ public class PacienteDaoPostgreSQL implements PacienteDao {
 			preparedStatement.setString(5, paciente.getEmail());
 			preparedStatement.setString(6, paciente.getTelefono());
 			preparedStatement.setInt(7, paciente.getOdontologo().getId());
+			preparedStatement.setString(8, paciente.getFoto());
+			preparedStatement.setString(9, paciente.getFechanacimiento());
+			preparedStatement.setString(10, paciente.getGenero());
 			conexion.execute();
 		} catch (SQLException e) {
-			
+
+			System.out.println ("erro");
 		}
 	}
 	
@@ -66,7 +70,10 @@ public class PacienteDaoPostgreSQL implements PacienteDao {
 			preparedStatement.setString(5, paciente.getEmail());
 			preparedStatement.setString(6, paciente.getTelefono());
 			preparedStatement.setInt(7, paciente.getOdontologo().getId());
-			preparedStatement.setInt(8, paciente.getId());
+			preparedStatement.setString(8, paciente.getFoto());
+			preparedStatement.setString(9, paciente.getFechanacimiento());
+			preparedStatement.setString(10, paciente.getGenero());
+			preparedStatement.setInt(11, paciente.getId());
 			conexion.execute();
 		} catch (SQLException e) {
 			System.out.println("error");
@@ -90,10 +97,12 @@ public class PacienteDaoPostgreSQL implements PacienteDao {
 				String email = rs.getString("email");
 				String telefono = rs.getString("telefono");
 				String foto = rs.getString("foto");
+				String fechanacimiento = rs.getString("fechanacimiento");
+				String genero = rs.getString("genero");
 				int id_Odontologo = rs.getInt("id_odontologo");
 				Odontologo odontologo = new Odontologo();
 				odontologo.setId(id_Odontologo);
-				pacientes.add(new Paciente(id, tipodocumento, documento, nombre, apellido, email,telefono,foto,odontologo));
+				pacientes.add(new Paciente(id, tipodocumento, documento, nombre, apellido, email,telefono,foto,odontologo, fechanacimiento, genero));
 			}
 			
 		} catch (SQLException e) {
@@ -122,10 +131,12 @@ public class PacienteDaoPostgreSQL implements PacienteDao {
 				String email = rs.getString("email");
 				String telefono = rs.getString("telefono");
 				String foto = rs.getString("foto");
+				String fechanacimiento = rs.getString("fechanacimiento");
+				String genero = rs.getString("genero");
 				int id_Odontologo = rs.getInt("id_odontologo");
 				Odontologo odontologo = new Odontologo();
 				odontologo.setId(id_Odontologo);
-				paciente = new Paciente(id, tipodocumento, documento, nombre, apellido, email,telefono,foto,odontologo);
+				paciente = new Paciente(id, tipodocumento, documento, nombre, apellido, email,telefono,foto,odontologo, fechanacimiento, genero);
 			}
 			
 		} catch (SQLException e) {
@@ -156,9 +167,11 @@ public class PacienteDaoPostgreSQL implements PacienteDao {
 				String email = rs.getString("email");
 				String telefono = rs.getString("telefono");
 				String foto = rs.getString("foto");
+				String fechanacimiento = rs.getString("fechanacimiento");
+				String genero = rs.getString("genero");
 				Odontologo odontologo = new Odontologo();
 				odontologo.setId(id_odontologo);
-				paciente = new Paciente(id, tipodocumento, documento, nombre, apellido, email,telefono,foto,odontologo);
+				paciente = new Paciente(id, tipodocumento, documento, nombre, apellido, email,telefono,foto,odontologo, fechanacimiento, genero);
 			}
 			
 		} catch (SQLException e) {
@@ -189,9 +202,11 @@ public class PacienteDaoPostgreSQL implements PacienteDao {
 				String email = rs.getString("email");
 				String telefono = rs.getString("telefono");
 				String foto = rs.getString("foto");
+				String fechanacimiento = rs.getString("fechanacimiento");
+				String genero = rs.getString("genero");
 				Odontologo odontologo = new Odontologo();
 				odontologo.setId(id_odontologo);
-				pacientes.add(new Paciente(id, tipodocumento, documento, nombre, apellido, email,telefono,foto,odontologo));
+				pacientes.add(new Paciente(id, tipodocumento, documento, nombre, apellido, email,telefono,foto,odontologo, fechanacimiento, genero));
 			}
 			
 		} catch (SQLException e) {

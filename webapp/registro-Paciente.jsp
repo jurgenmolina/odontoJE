@@ -8,7 +8,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-<title>Inicio - OdontoJE</title>
+<title>Registro - OdontoJE</title>
 
 <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
 
@@ -52,12 +52,12 @@
 
     <li class="nav-item dropdown has-arrow">
     <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
-    <span class="user-img"><img class="rounded-circle" src="assets/img/profiles/jurgen1.jpg" width="31" alt="Seema Sisty"></span>
+    <span class="user-img"><img class="rounded-circle" src="assets/img/profiles/${odontologo.foto}" width="31" alt="Odontologo"></span>
     </a>
     <div class="dropdown-menu">
     <div class="user-header">
     <div class="avatar avatar-sm">
-    <img src="assets/img/profiles/jurgen1.jpg" alt="User Image" class="avatar-img rounded-circle">
+    <img src="assets/img/profiles/${odontologo.foto}" alt="User Image" class="avatar-img rounded-circle">
     </div>
     <div class="user-text">
 	    <h6>${odontologo.nombre}</h6>
@@ -116,7 +116,7 @@
 				<h4 class="card-title">Información del paciente</h4>
 				</div>
 				<div class="card-body">
-				<form action="insertarPaciente">
+				<form action="insertarPaciente" method="post" name ="formulario" enctype="multipart/form-data">
 					<div class="row">
 					<div class="col-xl-6">
 					
@@ -162,13 +162,13 @@
 						<label class="col-lg-3 col-form-label">Genero</label>
 						<div class="col-lg-9">
 						<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="genero" id="gender_male" checked>
+						<input class="form-check-input" type="radio" name="genero" value= "Masculino" id="gender_male" checked>
 						<label class="form-check-label" for="gender_male">
 						Masculino
 						</label>
 						</div>
 						<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="genero" id="gender_female">
+						<input class="form-check-input" type="radio" name="genero" value = "Femenino "id="gender_female">
 						<label class="form-check-label" for="gender_female">
 						Femenino
 						</label>
@@ -192,7 +192,8 @@
 					
 					<div class="form-group row">
 						<label for="exampleFormControlFile1">Foto del paciente (Opcional)</label>
-						<input type="file" class="form-control-file" name="foto" id="exampleFormControlFile1">
+						<input accept="image/png,image/jpeg" type="file" class="form-control-file" id="exampleFormControlFile1" name="archivo">
+						<input type="hidden" name="foto" value="" />
 					</div>	
 					</div>
 					</div>
@@ -215,13 +216,18 @@
 					<input type="text" class="form-control" value="<c:out value='${odontologo.id}' />" name = "id_odontologo"  readonly="readonly">
 					</div>
 					</div>
+					
+					
 					</div>
 					</div>
 					
 					<div class="text-end">
-						<button type="submit" class="btn btn-primary" onclick="saludo()">Guardar</button>
+						<button type="submit" class="btn btn-primary" onclick="cargarArchivo(exampleFormControlFile1)">Guardar</button>
 					</div>
+					
+					
 				</form>
+				<iframe name="null" style="display: none;"></iframe>
 				</div>
 				</div>
 				</div>
@@ -239,6 +245,8 @@
 <script src="assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
 <script src="assets/js/script.js"></script>
+
+<script src="assets/js/codigo.js"></script>
 </body>
 </html>
 			

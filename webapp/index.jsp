@@ -8,7 +8,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-<title>Inicio - OdontoJE</title>
+<title>Inicio</title>
 
 <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
 
@@ -19,6 +19,8 @@
 <link rel="stylesheet" href="assets/css/feathericon.min.css">
 
 <link rel="stylesheet" href="assets/plugins/morris/morris.css">
+
+<link rel="stylesheet" href="assets/css/buscar.css">
 
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
@@ -52,15 +54,15 @@
 
     <li class="nav-item dropdown has-arrow">
     <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
-    <span class="user-img"><img class="rounded-circle" src="assets/img/profiles/jurgen1.jpg" width="31" alt="Seema Sisty"></span>
+    <span class="user-img"><img class="rounded-circle" src="assets/img/profiles/${odontologo.foto}" width="31" alt="Odontologo"></span>
     </a>
     <div class="dropdown-menu">
     <div class="user-header">
     <div class="avatar avatar-sm">
-    <img src="assets/img/profiles/jurgen1.jpg" alt="User Image" class="avatar-img rounded-circle">
+    <img src="assets/img/profiles/${odontologo.foto}" alt="User Image" class="avatar-img rounded-circle">
     </div>
     <div class="user-text">
-	    <h6>${odontologo.nombre}</h6>
+	    <h6>${odontologo.nombre} </h6>
 	    <p class="text-muted mb-0">Odontologo</p>
     </div>
     </div>
@@ -111,14 +113,25 @@
 	<div class="content container-fluid">
 		<div class="row">
 			<div class="col-lg-12">
+			
+			
 			<div class="card">
 				<div class="card-header">
+				
+				
 				<h4 class="card-title">Pacientes</h4>
+				
 				</div>
 				
+					<div class="top-nav-search">
+						<form>
+						<input type="text" id="searchTerm" class="form-control" placeholder="Search here" onkeyup="doSearch()" >
+						<p class="btn"><i class="fa fa-search"></i></p>
+						</form>
+					</div>
 			<div class="card-body">
 			<div class="table-responsive">
-			<table class="table mb-0">
+			<table id="datos" class="table mb-0">
 				<thead>
 					<tr>
 					<th>Tipo Documento</th>
@@ -154,10 +167,20 @@
                                         <c:out value="${paciente.telefono}" />
                                     </td>
                                     
-                                    <td><a href="editarPaciente?id=<c:out value='${paciente.id}' />">Editar</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="eliminarPaciente?id=<c:out value='${paciente.id}' />">Eliminar</a></td>
+                                    <td><a href="editarPaciente?id=<c:out value='${paciente.id}' />">Ver</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="eliminarPaciente?id=<c:out value='${paciente.id}' />">Eliminar</a></td>
                                 </tr>
                             </c:forEach>
-				</tbody>
+					</tbody>
+					<tfoot>
+			            <tr>
+			                <th></th>
+			                <th></th>
+			                <th></th>
+			                <th></th>
+			                <th></th>
+			                <th></th>
+			            </tr>
+			        </tfoot>
 			</table>
 			</div>
 			</div>
@@ -177,5 +200,7 @@
 <script src="assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
 <script src="assets/js/script.js"></script>
+
+<script src="assets/js/buscar.js"></script>
 </body>
 </html>
