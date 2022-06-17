@@ -20,10 +20,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import dao.CitaDao;
+import dao.CitaDaoFactory;
 import dao.OdontologoDao;
 import dao.OdontologoDaoFactory;
 import dao.PacienteDao;
 import dao.PacienteDaoFactory;
+import modelo.Cita;
 import modelo.Odontologo;
 import modelo.Paciente;
 
@@ -38,6 +41,7 @@ public class Servlet extends HttpServlet {
 	
 	private OdontologoDao odontologoDao;
 	private PacienteDao  pacienteDao;
+	private CitaDao citaDao;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -50,6 +54,7 @@ public class Servlet extends HttpServlet {
 		String type = getServletContext().getInitParameter("type");
 		this.odontologoDao = OdontologoDaoFactory.getOdontologoDao(type);
 		this.pacienteDao = PacienteDaoFactory.getPacienteDao(type);
+		this.citaDao = CitaDaoFactory.getCitaDao(type);
 	}
 
 
@@ -88,6 +93,16 @@ public class Servlet extends HttpServlet {
 				break;
 			case "/subirArchivo":
 				subirArchivoPaciente(request, response);
+				break;
+				
+			case "/registrarCita":
+				registrarCita(request, response);
+				break;
+			case "/insertarCita":
+				insertarCita(request, response);
+				break;
+			case "/calendario":
+				iniciarCalendario(request, response);
 				break;
 			
 				
@@ -304,6 +319,55 @@ public class Servlet extends HttpServlet {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("registro-Paciente.jsp");
 		dispatcher.forward(request, response);
 		
+	}
+	
+	private void registrarCita(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, SQLException, IOException {
+		
+		
+		HttpSession misession= (HttpSession) request.getSession();
+		 
+		Odontologo odontologo= (Odontologo) misession.getAttribute("odontologo");
+		
+		List <Paciente> listPaciente = pacienteDao.selectAllOdontologo(odontologo.getId());
+		
+		request.setAttribute("listPaciente", listPaciente);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("registro-Cita.jsp");
+		dispatcher.forward(request, response);
+		
+	}
+	
+	private void insertarCita(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, SQLException, IOException {
+		
+		String fecha = request.getParameter("fecha");
+		String consulta = request.getParameter("consulta");
+		
+		int pac = Integer.parseInt(request.getParameter("paciente"));
+		Paciente paciente = pacienteDao.select(pac);
+		
+		int odonto = Integer.parseInt(request.getParameter("odontologo"));
+		Odontologo odontologo = odontologoDao.select(odonto);
+		
+		Cita cita = new Cita (paciente, odontologo, fecha, consulta);
+		
+		citaDao.insert(cita);
+		response.sendRedirect("inicio");
+		
+	}
+	
+	private void iniciarCalendario(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		
+		HttpSession misession= (HttpSession) request.getSession();
+		 
+		Odontologo odontologo= (Odontologo) misession.getAttribute("odontologo");
+		
+		List <Cita> listaCitas = citaDao.selectAllOdontologo(odontologo.getId());
+		
+		request.setAttribute("listaCitas", listaCitas);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("calendario.jsp");
+		dispatcher.forward(request, response);
 	}
 	
 	

@@ -86,11 +86,11 @@
 			</li>
 			
 			<li>
-			<a href="#"><i class="fe fe-edit"></i> <span>Agendar Cita</span></a>
+			<a href="registrarCita"><i class="fe fe-edit"></i> <span>Agendar Cita</span></a>
 			</li>
 			
 			<li>
-			<a href="#"><i class="fe fe-folder"></i> <span>Calendario de citas</span></a>
+			<a href="calendario"><i class="fe fe-folder"></i> <span>Calendario de citas</span></a>
 			</li>
 			
 			<li>

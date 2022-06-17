@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset = utf-8"
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -8,7 +8,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-<title>Inicio</title>
+<title>Registro - OdontoJE</title>
 
 <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
 
@@ -19,8 +19,6 @@
 <link rel="stylesheet" href="assets/css/feathericon.min.css">
 
 <link rel="stylesheet" href="assets/plugins/morris/morris.css">
-
-<link rel="stylesheet" href="assets/css/buscar.css">
 
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
@@ -48,7 +46,6 @@
 <i class="fa fa-bars"></i>
 </a>
 
-<!-- Barra de navegacion del odontologo logeado en la aplicacion web -->
 
 <ul class="nav user-menu">
 
@@ -63,7 +60,7 @@
     <img src="assets/img/profiles/${odontologo.foto}" alt="User Image" class="avatar-img rounded-circle">
     </div>
     <div class="user-text">
-	    <h6>${odontologo.nombre} </h6>
+	    <h6>${odontologo.nombre}</h6>
 	    <p class="text-muted mb-0">Odontologo</p>
     </div>
     </div>
@@ -75,7 +72,6 @@
 
 </div>
 
-<!-- slidebar para la navegacion de la aplicación web -->
 
 <div class="sidebar" id="sidebar">
 <div class="sidebar-inner slimscroll">
@@ -84,15 +80,15 @@
 <li class="menu-title">
 </li>
 
-			<li class="active" >
+			<li>
 			<a href="inicio"><i class="fe fe-users"></i> <span>Lista de Pacientes</span></a>
 			</li>
 			
-			<li>
+			<li  >
 			<a href="registrarPaciente"><i class="fe fe-user"></i> <span>Registrar paciente</span></a>
 			</li>
 			
-			<li>
+			<li  class="active">
 			<a href="registrarCita"><i class="fe fe-edit"></i> <span>Agendar Cita</span></a>
 			</li>
 			
@@ -110,87 +106,70 @@
 </div>
 </div>
 
-
-<div class="page-wrapper">
-	<div class="content container-fluid">
-		<div class="row">
-			<div class="col-lg-12">
-			
-			
-			<div class="card">
+	<div class="page-wrapper">
+		<div class="content container-fluid">
+		
+			<div class="row">
+				<div class="col-md-12">
+				<div class="card">
 				<div class="card-header">
-				
-				
-				<h4 class="card-title">Pacientes</h4>
-				
+				<h4 class="card-title">Solicitud de Cita</h4>
 				</div>
+				<div class="card-body">
 				
-					<div class="top-nav-search">
-						<form>
-						<input type="text" id="searchTerm" class="form-control" placeholder="Search here" onkeyup="doSearch()" >
-						<p class="btn"><i class="fa fa-search"></i></p>
-						</form>
-					</div>
-			<div class="card-body">
-			<div class="table-responsive">
-			<table id="datos" class="table mb-0">
-				<thead>
-					<tr>
-					<th>Tipo Documento</th>
-					<th>Documento</th>
-					<th>Nombre</th>
-					<th>Apellido</th>
-					<th>Email</th>
-					<th>Telefono</th>
-					<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					 <c:forEach var="paciente" items="${listPaciente}">
-
-                                <tr>
-                                    
-                                    <td>
-                                        <c:out value="${paciente.tipodocumento}" />
-                                    </td>
-                                    <td>
-                                        <c:out value="${paciente.documento}" />
-                                    </td>
-                                    <td>
-                                        <c:out value="${paciente.nombre}" />
-                                    </td>
-                                    <td>
-                                        <c:out value="${paciente.apellido}" />
-                                    </td>
-                                    <td>
-                                        <c:out value="${paciente.email}" />
-                                    </td>
-                                    <td>
-                                        <c:out value="${paciente.telefono}" />
-                                    </td>
-                                    
-                                    <td><a href="editarPaciente?id=<c:out value='${paciente.id}' />">Ver</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="eliminarPaciente?id=<c:out value='${paciente.id}' />">Eliminar</a></td>
-                                </tr>
+				
+				<form action="insertarCita" method="post" name ="formulario" >
+				<div class="row">
+					<div class="col-xl-6">
+					
+					<div class="form-group row">
+					<label class="col-lg-3 col-form-label">Paciente</label>
+					<div class="col-lg-9">
+					<select class="select form-control" name = "paciente"  required="required">
+							<option disabled="disabled" selected="selected"></option>
+							<c:forEach var="est" items="${listPaciente}"> 
+								<option value="<c:out value='${est.id}'/>"> ${est.documento} ${est.nombre} ${est.apellido}</option>                             
                             </c:forEach>
-					</tbody>
-					<tfoot>
-			            <tr>
-			                <th></th>
-			                <th></th>
-			                <th></th>
-			                <th></th>
-			                <th></th>
-			                <th></th>
-			            </tr>
-			        </tfoot>
-			</table>
-			</div>
-			</div>
-			</div>
-			</div>
+					</select>
+					</div>
+					</div>
+					
+					<div class="form-group row">
+					<label class="col-lg-3 col-form-label">Odontologo</label>
+					<div class="col-lg-9">
+					<input type="text" class="form-control" value="<c:out value='${odontologo.id}' />" name = "odontologo"  readonly="readonly">
+					</div>
+					</div>
+					
+					
+					<div class="form-group row">
+					<label>Fecha Cita</label>
+					<input type="date" id="date" value="2000-06-01" class="form-control" name="fecha">
+					<span class="form-text text-muted">dd/mm/yyyy</span>
+					</div>
+					</div>
+					
+					<div class="form-group row">
+					<label class="col-form-label col-md-2">	Motivo de la Consulta</label>
+					<div class="col-md-10">
+					<textarea rows="5" cols="5" class="form-control" placeholder="Resumen de la historia clinica" name = "consulta" ></textarea>
+					</div>
+					</div>
+					
+					
+					<div class="text-end">
+						<button type="submit" class="btn btn-primary">Guardar</button>
+					</div>
+					
+					</div>
+				</form>
+					
+					</div>
+					</div>
+				</div>
+				</div>
+				</div>
 		</div>
-	</div>
-</div>
 
 </div>
 
@@ -203,6 +182,7 @@
 
 <script src="assets/js/script.js"></script>
 
-<script src="assets/js/buscar.js"></script>
+<script src="assets/js/codigo.js"></script>
 </body>
 </html>
+			

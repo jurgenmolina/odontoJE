@@ -119,7 +119,7 @@ public class OdontologoDaoPostgreSQL implements OdontologoDao {
 			}
 			
 		} catch (SQLException e) {
-			
+			System.out.println("error");
 		}
 		
 		return odontologo;

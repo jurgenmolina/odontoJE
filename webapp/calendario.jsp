@@ -84,7 +84,7 @@
 <li class="menu-title">
 </li>
 
-			<li class="active" >
+			<li >
 			<a href="inicio"><i class="fe fe-users"></i> <span>Lista de Pacientes</span></a>
 			</li>
 			
@@ -96,7 +96,7 @@
 			<a href="registrarCita"><i class="fe fe-edit"></i> <span>Agendar Cita</span></a>
 			</li>
 			
-			<li>
+			<li class="active" >
 			<a href="calendario"><i class="fe fe-folder"></i> <span>Calendario de citas</span></a>
 			</li>
 			
@@ -136,40 +136,32 @@
 			<table id="datos" class="table mb-0">
 				<thead>
 					<tr>
-					<th>Tipo Documento</th>
-					<th>Documento</th>
-					<th>Nombre</th>
-					<th>Apellido</th>
-					<th>Email</th>
-					<th>Telefono</th>
+					<th>Paciente</th>
+					<th>Odontologo</th>
+					<th>Fecha</th>
+					<th>Consulta</th>
 					<th></th>
 					</tr>
 				</thead>
 				<tbody>
-					 <c:forEach var="paciente" items="${listPaciente}">
+					 <c:forEach var="cita" items="${listaCitas}">
 
                                 <tr>
                                     
                                     <td>
-                                        <c:out value="${paciente.tipodocumento}" />
+                                        <c:out value="${cita.paciente.id}" />
                                     </td>
                                     <td>
-                                        <c:out value="${paciente.documento}" />
+                                        <c:out value="${cita.odontologo.id}" />
                                     </td>
                                     <td>
-                                        <c:out value="${paciente.nombre}" />
+                                        <c:out value="${cita.fecha}" />
                                     </td>
                                     <td>
-                                        <c:out value="${paciente.apellido}" />
-                                    </td>
-                                    <td>
-                                        <c:out value="${paciente.email}" />
-                                    </td>
-                                    <td>
-                                        <c:out value="${paciente.telefono}" />
+                                        <c:out value="${cita.consulta}" />
                                     </td>
                                     
-                                    <td><a href="editarPaciente?id=<c:out value='${paciente.id}' />">Ver</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="eliminarPaciente?id=<c:out value='${paciente.id}' />">Eliminar</a></td>
+                                    <td><a href="editarPaciente?id=<c:out value='${cita.id}' />">Ver</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="eliminarPaciente?id=<c:out value='${cita.id}' />">Eliminar</a></td>
                                 </tr>
                             </c:forEach>
 					</tbody>
