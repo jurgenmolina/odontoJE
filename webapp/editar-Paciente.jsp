@@ -41,14 +41,11 @@
 <i class="fe fe-text-align-left"></i>
 </a>
 
-
 <a class="mobile_btn" id="mobile_btn">
 <i class="fa fa-bars"></i>
 </a>
 
-
 <ul class="nav user-menu">
-
 
     <li class="nav-item dropdown has-arrow">
     <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
@@ -111,7 +108,7 @@
 <div class="page-header">
 <div class="row align-items-center">
 	<div class="col">
-	<h3 class="page-title">Paciente </h3>
+	<h3 class="page-title">Perfil del Paciente</h3>
 	
 	</div>
 </div>
@@ -129,22 +126,34 @@
 <div class="card-body p-0">
 <div class="profile-list">
 <a href="#"><i class="fe fe-comment-o"></i></a>
-<a href="#">Chat</a>
-<a href="#" class="float-end"><h5>10, 203</h5></a>
+<a href="#">Mensajes</a>
+<a href="#" class="float-end"><h5>deshabilitado</h5></a>
 </div>
 <div class="profile-list">
 <a href="#"><i class="fe fe-phone"></i></a>
-<a href="#">Call</a>
-<a href="#" class="float-end"><h5>403</h5></a>
+<a href="#">Llamadas</a>
+<a href="#" class="float-end"><h5>deshabilitado</h5></a>
 </div>
 <div class="profile-list">
 <a href="#"><i class="fe fe-disabled"></i></a>
-<a href="#">Blocked User</a>
-<a href="#" class="float-end"><h5>103</h5></a>
+<a href="#">Citas</a>
+<a href="#" class="float-end"><h5>deshabilitado</h5></a>
 </div>
-<div class="profile-list">
-<a href="group-history.html"><button type="button" class="btn btn-block btn-outline-light">View History</button></a>
-</div>
+
+<form action="subirArchivo" method="post" name ="formulario" enctype="multipart/form-data">
+	<a href="download/acme-doc-2.0.1.txt" download="${paciente.archivo}">${paciente.archivo}</a>
+
+	<div class="form-group row">
+						<c:if test="${paciente != null}">
+                            <input type="hidden" name="id" value="<c:out value='${paciente.id}' />" />
+                    	</c:if>
+						<input  accept=".zip,.rar,.7zip" type="file" class="form-control-file" id="exampleFormControlFile1" name="archivo">
+						<input type="hidden" name="foto" value="" />
+					</div>	
+	
+	<button type="submit" class="btn btn-primary" onclick="cargarArchivo(exampleFormControlFile1)">Guardar</button>
+</form>
+
 </div>
 </div>
 </div>
@@ -154,21 +163,68 @@
  <h4 class="card-title">Información del paciente</h4>
 </div>
 <div class="card-body">
-				<form action="insertarPaciente" method="post" name ="formulario" enctype="multipart/form-data">
+				<form action="actualizarPaciente" method="post"">
 					<div class="row">
 					
+					<c:if test="${paciente != null}">
+                            <input type="hidden" name="id" value="<c:out value='${paciente.id}' />" />
+                    </c:if>
+					
+					<c:if test="${paciente.tipodocumento == 'Cedula de Ciudadania'}">
 					<div class="form-group row">
 					<label class="col-lg-3 col-form-label">Tipo de documento</label>
 					<div class="col-lg-9">
-					<select class="select form-control" name = "tipodocumento" value="<c:out value='${paciente.tipodocumento}' />"  required="required">
-						<option disabled="disabled" selected="selected"></option>
-						<option >Cedula de Ciudadania</option>
+					<select class="select form-control" name = "tipodocumento" required="required">
+						<option selected="selected" >Cedula de Ciudadania</option>
 						<option >Cedula de Extranjeria</option>
 						<option >Tarjeta de Identidad</option>
 						<option >Pasaporte</option>
 					</select>
 					</div>
 					</div>
+					</c:if>
+					
+					<c:if test="${paciente.tipodocumento == 'Cedula de Extranjeria'}">
+					<div class="form-group row">
+					<label class="col-lg-3 col-form-label">Tipo de documento</label>
+					<div class="col-lg-9">
+					<select class="select form-control" name = "tipodocumento" required="required">
+						<option >Cedula de Ciudadania</option>
+						<option selected="selected" >Cedula de Extranjeria</option>
+						<option >Tarjeta de Identidad</option>
+						<option >Pasaporte</option>
+					</select>
+					</div>
+					</div>
+					</c:if>
+					
+					<c:if test="${paciente.tipodocumento == 'Tarjeta de Identidad'}">
+					<div class="form-group row">
+					<label class="col-lg-3 col-form-label">Tipo de documento</label>
+					<div class="col-lg-9">
+					<select class="select form-control" name = "tipodocumento" required="required">
+						<option >Cedula de Ciudadania</option>
+						<option >Cedula de Extranjeria</option>
+						<option selected="selected" >Tarjeta de Identidad</option>
+						<option >Pasaporte</option>
+					</select>
+					</div>
+					</div>
+					</c:if>
+					
+					<c:if test="${paciente.tipodocumento == 'Pasaporte'}">
+					<div class="form-group row">
+					<label class="col-lg-3 col-form-label">Tipo de documento</label>
+					<div class="col-lg-9">
+					<select class="select form-control" name = "tipodocumento" required="required">
+						<option >Cedula de Ciudadania</option>
+						<option >Cedula de Extranjeria</option>
+						<option >Tarjeta de Identidad</option>
+						<option selected="selected" >Pasaporte</option>
+					</select>
+					</div>
+					</div>
+					</c:if>
 					
 					<div class="form-group row">
 					<label class="col-lg-3 col-form-label">Documento</label>
@@ -264,12 +320,12 @@
 					
 					
 					<div class="text-end">
-						<button type="submit" class="btn btn-primary" onclick="cargarArchivo(exampleFormControlFile1)">Actualizar</button>
+						<button type="submit" class="btn btn-primary">Actualizar</button>
 					</div>
 					
 					
 				</form>
-				<iframe name="null" style="display: none;"></iframe>
+				
 				</div>
 </div>
 </div>

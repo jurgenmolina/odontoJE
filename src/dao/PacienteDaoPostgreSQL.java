@@ -18,6 +18,7 @@ public class PacienteDaoPostgreSQL implements PacienteDao {
 	private static final String INSERT_PACIENTE_SQL = "INSERT INTO paciente (tipodocumento, documento, nombre, apellido, email, telefono, id_odontologo, foto, fechanacimiento, genero) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?);";
 	private static final String DELETE_PACIENTE_SQL = "DELETE FROM paciente WHERE id = ?;";
 	private static final String UPDATE_PACIENTE_SQL = "UPDATE paciente SET tipodocumento = ?, documento = ?, nombre = ?, apellido = ?, email = ?, telefono = ? , id_odontologo = ? , foto = ? , fechanacimiento = ? , genero = ?  WHERE id = ?;";
+	private static final String UPDATE_PACIENTEARCHIVO_SQL = "UPDATE paciente SET archivo = ?  WHERE id = ?;";
 	private static final String SELECT_PACIENTE_BY_ID = "SELECT * FROM paciente WHERE id = ?;";
 	private static final String SELECT_PACIENTE_BY_ODONTOLOGO = "SELECT * FROM paciente WHERE id_odontologo = ?;";
 	private static final String SELECT_ALL_PACIENTES = "SELECT * FROM paciente;";
@@ -80,6 +81,17 @@ public class PacienteDaoPostgreSQL implements PacienteDao {
 		}
 	}
 	
+	public void updateArchivo(Paciente paciente) throws SQLException {
+		try {
+			PreparedStatement preparedStatement = (PreparedStatement) conexion.setPreparedStatement(UPDATE_PACIENTEARCHIVO_SQL);
+			preparedStatement.setString(1, paciente.getArchivo());
+			preparedStatement.setInt(2, paciente.getId());
+			conexion.execute();
+		} catch (SQLException e) {
+			System.out.println("error");
+		}
+	}
+	
 	public List<Paciente> selectAll() {
 		List <Paciente> pacientes = new ArrayList<>();
 		
@@ -133,10 +145,11 @@ public class PacienteDaoPostgreSQL implements PacienteDao {
 				String foto = rs.getString("foto");
 				String fechanacimiento = rs.getString("fechanacimiento");
 				String genero = rs.getString("genero");
+				String archivo = rs.getString("archivo");
 				int id_Odontologo = rs.getInt("id_odontologo");
 				Odontologo odontologo = new Odontologo();
 				odontologo.setId(id_Odontologo);
-				paciente = new Paciente(id, tipodocumento, documento, nombre, apellido, email,telefono,foto,odontologo, fechanacimiento, genero);
+				paciente = new Paciente(id, tipodocumento, documento, nombre, apellido, email,telefono,foto,odontologo, fechanacimiento, genero, archivo);
 			}
 			
 		} catch (SQLException e) {

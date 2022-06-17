@@ -48,6 +48,7 @@
 <i class="fa fa-bars"></i>
 </a>
 
+<!-- Barra de navegacion del odontologo logeado en la aplicacion web -->
 
 <ul class="nav user-menu">
 
@@ -74,6 +75,7 @@
 
 </div>
 
+<!-- slidebar para la navegacion de la aplicación web -->
 
 <div class="sidebar" id="sidebar">
 <div class="sidebar-inner slimscroll">

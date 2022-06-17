@@ -86,6 +86,9 @@ public class Servlet extends HttpServlet {
 			case "/insertarPaciente":
 				insertarPaciente(request, response);
 				break;
+			case "/subirArchivo":
+				subirArchivoPaciente(request, response);
+				break;
 			
 				
 			
@@ -110,6 +113,34 @@ public class Servlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+	}
+	
+//	Metodo para subir los archivos del paciente y despues actualiza en la base de datos el campo archivo
+	
+	private void subirArchivoPaciente(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, SQLException, IOException {
+		
+		PrintWriter out = response.getWriter();
+		String nomb = request.getParameter("foto");
+		Part arch = request.getPart("archivo");
+		InputStream is = arch.getInputStream();
+		File f = new File("C:/Users/Jurgen/Documents/Eclipse/OdontoJE/webapp/assets/archivos/"+nomb);
+		FileOutputStream ous = new FileOutputStream(f);
+		int dato = is.read();
+		while(dato != -1){
+			ous.write(dato);
+			dato = is.read();
+		}
+		
+		ous.close();
+		is.close();
+		
+		int id = Integer.parseInt(request.getParameter("id"));
+		Paciente paciente = new Paciente (id,nomb);
+		pacienteDao.updateArchivo(paciente);
+		
+		response.sendRedirect("inicio");
+		
 	}
 
 	

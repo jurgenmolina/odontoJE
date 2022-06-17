@@ -14,4 +14,5 @@ public interface PacienteDao {
 	public List < Paciente > selectAll();
 	public void delete(int id) throws SQLException;
 	public void update(Paciente user) throws SQLException;
+	public void updateArchivo(Paciente user) throws SQLException;
 }
