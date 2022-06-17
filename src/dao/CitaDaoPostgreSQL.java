@@ -16,7 +16,7 @@ public class CitaDaoPostgreSQL implements CitaDao{
 	private ConexionPostgreSQL conexion;
 	
 	private static final String INSERT_CITA_SQL = "INSERT INTO cita (paciente, odontologo, fecha, consulta) VALUES (?, ?, ?, ?);";
-	private static final String DELETE_CITA_SQL = "DELETE FROM Cita WHERE id = ?;";
+	private static final String DELETE_CITA_SQL = "DELETE FROM cita WHERE id = ?;";
 	private static final String SELECT_CITA_BY_ODONTOLOGO = "SELECT * FROM Cita WHERE odntologo = ?;";
 	private static final String SELECT_CITA_BY_PACIENTE = "SELECT * FROM Cita WHERE paciente = ?;";
 	private static final String SELECT_ALL_CITAS = "SELECT * FROM Cita;";

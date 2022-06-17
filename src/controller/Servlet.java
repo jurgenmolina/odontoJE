@@ -104,7 +104,9 @@ public class Servlet extends HttpServlet {
 			case "/calendario":
 				iniciarCalendario(request, response);
 				break;
-			
+			case "/eliminarCita":
+				eliminarCita(request, response);
+				break;
 				
 			
 				
@@ -175,7 +177,7 @@ public class Servlet extends HttpServlet {
 		int odonto = Integer.parseInt(request.getParameter("id_odontologo"));
 		Odontologo odontologo = odontologoDao.select(odonto);
 		
-		Paciente paciente = new Paciente (id, tipodocumento, documento, nombre, apellido, email, telefono , foto, odontologo, fechanacimiento, genero);
+		Paciente paciente = new Paciente (id, tipodocumento, documento, nombre, apellido, email, telefono, odontologo, fechanacimiento, genero);
 		
 		pacienteDao.update(paciente);
 		
@@ -206,6 +208,19 @@ public class Servlet extends HttpServlet {
 		pacienteDao.delete(id);
 		
 		response.sendRedirect("inicio");
+		
+		
+		
+	}
+	
+	private void eliminarCita(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, SQLException, IOException {
+		
+		int id = Integer.parseInt(request.getParameter("id"));
+		
+		citaDao.delete(id);
+		
+		response.sendRedirect("calendario");
 		
 		
 		
@@ -352,7 +367,7 @@ public class Servlet extends HttpServlet {
 		Cita cita = new Cita (paciente, odontologo, fecha, consulta);
 		
 		citaDao.insert(cita);
-		response.sendRedirect("inicio");
+		response.sendRedirect("calendario");
 		
 	}
 	
@@ -364,6 +379,18 @@ public class Servlet extends HttpServlet {
 		Odontologo odontologo= (Odontologo) misession.getAttribute("odontologo");
 		
 		List <Cita> listaCitas = citaDao.selectAllOdontologo(odontologo.getId());
+		
+		for(Cita cita : listaCitas) {
+			int i = cita.getOdontologo().getId();
+			Odontologo o = odontologoDao.select(i);
+			cita.setOdontologo(o);
+			
+			int j = cita.getPaciente().getId();
+			Paciente p = pacienteDao.select(j);
+			cita.setPaciente(p);
+			}
+		
+		System.out.println(listaCitas);
 		
 		request.setAttribute("listaCitas", listaCitas);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("calendario.jsp");

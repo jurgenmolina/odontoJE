@@ -149,10 +149,10 @@
                                 <tr>
                                     
                                     <td>
-                                        <c:out value="${cita.paciente.id}" />
+                                        <c:out value="${cita.paciente.documento} ${cita.paciente.nombre}" />
                                     </td>
                                     <td>
-                                        <c:out value="${cita.odontologo.id}" />
+                                        <c:out value=" ${cita.odontologo.nombre}" />
                                     </td>
                                     <td>
                                         <c:out value="${cita.fecha}" />
@@ -161,7 +161,7 @@
                                         <c:out value="${cita.consulta}" />
                                     </td>
                                     
-                                    <td><a href="editarPaciente?id=<c:out value='${cita.id}' />">Ver</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="eliminarPaciente?id=<c:out value='${cita.id}' />">Eliminar</a></td>
+                                    <td><a href="eliminarCita?id=<c:out value='${cita.id}' />">Eliminar</a></td>
                                 </tr>
                             </c:forEach>
 					</tbody>

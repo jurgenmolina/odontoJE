@@ -169,6 +169,10 @@
 					<c:if test="${paciente != null}">
                             <input type="hidden" name="id" value="<c:out value='${paciente.id}' />" />
                     </c:if>
+                    
+                    <c:if test="${paciente != null}">
+                            <input type="hidden" name="foto" value="<c:out value='${paciente.foto}' />" />
+                    </c:if>
 					
 					<c:if test="${paciente.tipodocumento == 'Cedula de Ciudadania'}">
 					<div class="form-group row">
