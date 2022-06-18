@@ -117,8 +117,7 @@
 <div class="col-md-4">
 <div class="card">
 <div class="card-header all-center">
-<a href="" class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="assets/img/profiles/${paciente.foto}" alt="Foto del paciente">
-<i class="fe fe-camera"></i>
+<a href="" class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="http://localhost/Servidor/profiles/${paciente.foto}" alt="Foto del paciente">
 </a>
 <h6>${paciente.nombre} ${paciente.apellido}</h6>
 <p>Paciente</p>
@@ -140,14 +139,15 @@
 <a href="#" class="float-end"><h5>deshabilitado</h5></a>
 </div>
 
-<form action="subirArchivo" method="post" name ="formulario" enctype="multipart/form-data">
+<form action="updateFotoPaciente" method="post" name ="formulario" enctype="multipart/form-data">
+<h6>Actualizar foto</h6>
 	<a href="download/acme-doc-2.0.1.txt" download="${paciente.archivo}">${paciente.archivo}</a>
 
 	<div class="form-group row">
 						<c:if test="${paciente != null}">
                             <input type="hidden" name="id" value="<c:out value='${paciente.id}' />" />
                     	</c:if>
-						<input  accept=".zip,.rar,.7zip" type="file" class="form-control-file" id="exampleFormControlFile1" name="archivo">
+						<input  accept=".jpg,.png,.jpge" type="file" class="form-control-file" id="exampleFormControlFile1" name="archivo">
 						<input type="hidden" name="foto" value="" />
 					</div>	
 	

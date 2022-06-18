@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+      pageEncoding="ISO-8859-1"%> 
     
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-    
+   <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
+   
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-<title>Registro cita - OdontoJE</title>
+<title>Cita - OdontoJE</title>
 
 <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
 
@@ -41,14 +41,11 @@
 <i class="fe fe-text-align-left"></i>
 </a>
 
-
 <a class="mobile_btn" id="mobile_btn">
 <i class="fa fa-bars"></i>
 </a>
 
-
 <ul class="nav user-menu">
-
 
     <li class="nav-item dropdown has-arrow">
     <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
@@ -88,11 +85,11 @@
 			<a href="registrarPaciente"><i class="fe fe-user"></i> <span>Registrar paciente</span></a>
 			</li>
 			
-			<li  class="active">
+			<li>
 			<a href="registrarCita"><i class="fe fe-edit"></i> <span>Agendar Cita</span></a>
 			</li>
 			
-			<li>
+			<li  class="active" >
 			<a href="calendario"><i class="fe fe-folder"></i> <span>Calendario de citas</span></a>
 			</li>
 			
@@ -113,62 +110,69 @@
 				<div class="col-md-12">
 				<div class="card">
 				<div class="card-header">
-				<h4 class="card-title">Solicitud de Cita</h4>
+				<h4 class="card-title">Revisión del paciente</h4>
 				</div>
 				<div class="card-body">
 				
 				
-				<form action="insertarCita" method="post" name ="formulario" >
+				<form action="updateCita" method="post"  name ="formulario" enctype="multipart/form-data" >
 				<div class="row">
 					<div class="col-xl-6">
+					
+					<c:if test="${cita != null}">
+                            <input type="hidden" name="id" value="<c:out value='${cita.id}' />" />
+                    </c:if>
 					
 					<div class="form-group row">
 					<label class="col-lg-3 col-form-label">Paciente</label>
 					<div class="col-lg-9">
-					<select class="select form-control" name = "paciente"  required="required">
-							<option disabled="disabled" selected="selected"></option>
-							<c:forEach var="est" items="${listPaciente}"> 
-								<option value="<c:out value='${est.id}'/>"> ${est.documento} ${est.nombre} ${est.apellido}</option>                             
-                            </c:forEach>
-					</select>
+						<input type="text" class="form-control" value="<c:out value='${cita.paciente.nombre} ${cita.paciente.apellido}' />" name = "paciente"  readonly="readonly">
 					</div>
 					</div>
 					
 					<div class="form-group row">
 					<label class="col-lg-3 col-form-label">Odontologo</label>
 					<div class="col-lg-9">
-					<input type="text" class="form-control" value="<c:out value='${odontologo.id}' />" name = "odontologo"  readonly="readonly">
+					<input type="text" class="form-control" value="<c:out value='${cita.odontologo.nombre}' />" name = "odontologo"  readonly="readonly">
 					</div>
 					</div>
-					
 					
 					<div class="form-group row">
-					<label>Fecha Cita</label>
-					<input type="datetime-local" id="date" class="form-control" name="fecha">
-					<span class="form-text text-muted">dd-Mm-yyyy hh:mm:ss --</span>
+					<label class="col-lg-3 col-form-label">Fecha de la cita</label>
+					<div class="col-lg-9">
+					<input type="text" class="form-control" value="<c:out value='${cita.fecha}' />" name = "odontologo"  readonly="readonly">
 					</div>
 					</div>
 					
+					<div class="form-group row">
+					<label class="col-form-label col-md-2">	Detalle </label>
+					<div class="col-md-10">
+					<textarea rows="5" cols="5" class="form-control" placeholder="Detalle de la consulta odontologica " name = "consulta" required="required">${cita.consulta}</textarea>
+					</div>
+					</div>
 					
-					
-					 <input type="hidden" name="estado" value="f" />
-					
+					<div class="form-group row">
+						<a href="download/acme-doc-2.0.1.txt" download="${cita.archivo}">${cita.archivo}</a>
+						<label for="exampleFormControlFile1">Archivos (ZIP)</label>
+						<input accept=".zip,.rar,.7zip" type="file" class="form-control-file" id="exampleFormControlFile1" required="required" name="archivo">
+						<input type="hidden" name="foto" value="" />
+					</div>
 					
 					<div class="text-end">
-						<button type="submit" class="btn btn-primary">Guardar</button>
+						<button type="submit" class="btn btn-primary" onclick="cargarArchivo(exampleFormControlFile1)">Guardar</button>
 					</div>
-					
+					</div>
 					</div>
 				</form>
-					
+					<iframe name="null" style="display: none;"></iframe>
 					</div>
 					</div>
 				</div>
 				</div>
 				</div>
-		</div>
-
-</div>
+	</div>
+	
+	</div>
 
 
 <script src="assets/js/jquery-3.6.0.min.js"></script>
@@ -182,4 +186,3 @@
 <script src="assets/js/codigo.js"></script>
 </body>
 </html>
-			

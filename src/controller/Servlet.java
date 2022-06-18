@@ -90,11 +90,7 @@ public class Servlet extends HttpServlet {
 				break;
 			case "/insertarPaciente":
 				insertarPaciente(request, response);
-				break;
-			case "/subirArchivo":
-				subirArchivoPaciente(request, response);
-				break;
-				
+				break;				
 			case "/registrarCita":
 				registrarCita(request, response);
 				break;
@@ -104,11 +100,20 @@ public class Servlet extends HttpServlet {
 			case "/calendario":
 				iniciarCalendario(request, response);
 				break;
+			case "/editarCita":
+				editarCita(request, response);
+				break;
 			case "/eliminarCita":
 				eliminarCita(request, response);
 				break;
+			case "/updateCita":
+				updateCita(request, response);
+				break;
+			case "/updateFotoPaciente":
+				updateFoto(request, response);
+				break;
 				
-			
+				
 				
 			default:
 				showLogin(request, response);
@@ -134,14 +139,39 @@ public class Servlet extends HttpServlet {
 	
 //	Metodo para subir los archivos del paciente y despues actualiza en la base de datos el campo archivo
 	
-	private void subirArchivoPaciente(HttpServletRequest request, HttpServletResponse response) 
+	private void editarCita(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, SQLException, IOException {
 		
+		int id = Integer.parseInt(request.getParameter("id"));
+		
+		Cita cita = citaDao.select(id);
+		
+		int i = cita.getOdontologo().getId();
+		Odontologo o = odontologoDao.select(i);
+		cita.setOdontologo(o);
+		
+		int j = cita.getPaciente().getId();
+		Paciente p = pacienteDao.select(j);
+		cita.setPaciente(p);
+		request.setAttribute("cita", cita);
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("editar-Cita.jsp");
+		dispatcher.forward(request, response);
+		
+		
+	}
+	
+	private void updateCita(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, SQLException, IOException {
+		
+		int id = Integer.parseInt(request.getParameter("id"));
+		String consulta = request.getParameter("consulta");
+		String estado = request.getParameter("v");
 		PrintWriter out = response.getWriter();
 		String nomb = request.getParameter("foto");
 		Part arch = request.getPart("archivo");
 		InputStream is = arch.getInputStream();
-		File f = new File("C:/Users/Jurgen/Documents/Eclipse/OdontoJE/webapp/assets/archivos/"+nomb);
+		File f = new File("C:/xampp/htdocs/Servidor/archivos/"+nomb);
 		FileOutputStream ous = new FileOutputStream(f);
 		int dato = is.read();
 		while(dato != -1){
@@ -152,11 +182,42 @@ public class Servlet extends HttpServlet {
 		ous.close();
 		is.close();
 		
-		int id = Integer.parseInt(request.getParameter("id"));
-		Paciente paciente = new Paciente (id,nomb);
-		pacienteDao.updateArchivo(paciente);
+		Cita cita = new Cita(id, consulta, estado, nomb);
+		citaDao.updateCita(cita);
 		
-		response.sendRedirect("inicio");
+		response.sendRedirect("calendario");
+		
+	}
+	
+	private void updateFoto(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, SQLException, IOException {
+		
+		int id = Integer.parseInt(request.getParameter("id"));
+		PrintWriter out = response.getWriter();
+		String nomb = request.getParameter("foto");
+		Part arch = request.getPart("archivo");
+		InputStream is = arch.getInputStream();
+		File f = new File("C:/xampp/htdocs/Servidor/profiles/"+nomb);
+		FileOutputStream ous = new FileOutputStream(f);
+		int dato = is.read();
+		while(dato != -1){
+			ous.write(dato);
+			dato = is.read();
+		}
+		
+		ous.close();
+		is.close();
+		
+		Paciente paciente = new Paciente(id, nomb);
+		pacienteDao.updateFoto(paciente);
+		
+		Paciente pacienteActual = pacienteDao.select(id);
+		
+		request.setAttribute("paciente", pacienteActual);
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("editar-Paciente.jsp");
+		dispatcher.forward(request, response);
+		
 		
 	}
 
@@ -304,7 +365,7 @@ public class Servlet extends HttpServlet {
 		if(!nomb.isEmpty()) {
 			Part arch = request.getPart("archivo");
 			InputStream is = arch.getInputStream();
-			File f = new File("C:/Users/Jurgen/Documents/Eclipse/OdontoJE/webapp/assets/img/profiles/"+nomb);
+			File f = new File("C:/xampp/htdocs/Servidor/profiles/"+nomb);
 			FileOutputStream ous = new FileOutputStream(f);
 			int dato = is.read();
 			while(dato != -1){
@@ -356,7 +417,8 @@ public class Servlet extends HttpServlet {
 			throws ServletException, SQLException, IOException {
 		
 		String fecha = request.getParameter("fecha");
-		String consulta = request.getParameter("consulta");
+		System.out.println(fecha);
+		String estado = request.getParameter("estado");
 		
 		int pac = Integer.parseInt(request.getParameter("paciente"));
 		Paciente paciente = pacienteDao.select(pac);
@@ -364,8 +426,7 @@ public class Servlet extends HttpServlet {
 		int odonto = Integer.parseInt(request.getParameter("odontologo"));
 		Odontologo odontologo = odontologoDao.select(odonto);
 		
-		Cita cita = new Cita (paciente, odontologo, fecha, consulta);
-		
+		Cita cita = new Cita (paciente, odontologo, fecha, estado);
 		citaDao.insert(cita);
 		response.sendRedirect("calendario");
 		
@@ -390,7 +451,6 @@ public class Servlet extends HttpServlet {
 			cita.setPaciente(p);
 			}
 		
-		System.out.println(listaCitas);
 		
 		request.setAttribute("listaCitas", listaCitas);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("calendario.jsp");

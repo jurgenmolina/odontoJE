@@ -8,7 +8,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-<title>Inicio</title>
+<title>Calendario</title>
 
 <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
 
@@ -139,7 +139,7 @@
 					<th>Paciente</th>
 					<th>Odontologo</th>
 					<th>Fecha</th>
-					<th>Consulta</th>
+					<th>Estado</th>
 					<th></th>
 					</tr>
 				</thead>
@@ -157,11 +157,20 @@
                                     <td>
                                         <c:out value="${cita.fecha}" />
                                     </td>
-                                    <td>
-                                        <c:out value="${cita.consulta}" />
+                                    <td>	
+                                    
+                                    	 <c:if test="${cita.estado == 'f'}">
+					                          <div class="font-weight-600 text-danger">Sin revisar </div>
+					                    </c:if>
+					                           
+					                    
+					                    <c:if test="${cita.estado == 't'}">
+					                           <div class="font-weight-600 text-success">Completado</div>
+					                    </c:if>
+                                    
                                     </td>
                                     
-                                    <td><a href="eliminarCita?id=<c:out value='${cita.id}' />">Eliminar</a></td>
+                                    <td><a href="editarCita?id=<c:out value='${cita.id}' />"><i class="fe fe-eye"></i>&nbsp;&nbsp;Ver</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="eliminarCita?id=<c:out value='${cita.id}' />">Eliminar</a></td>
                                 </tr>
                             </c:forEach>
 					</tbody>

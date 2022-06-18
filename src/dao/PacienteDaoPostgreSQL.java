@@ -18,7 +18,8 @@ public class PacienteDaoPostgreSQL implements PacienteDao {
 	private static final String INSERT_PACIENTE_SQL = "INSERT INTO paciente (tipodocumento, documento, nombre, apellido, email, telefono, id_odontologo, foto, fechanacimiento, genero) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?);";
 	private static final String DELETE_PACIENTE_SQL = "DELETE FROM paciente WHERE id = ?;";
 	private static final String UPDATE_PACIENTE_SQL = "UPDATE paciente SET tipodocumento = ?, documento = ?, nombre = ?, apellido = ?, email = ?, telefono = ? , id_odontologo = ? , fechanacimiento = ? , genero = ?  WHERE id = ?;";
-	private static final String UPDATE_PACIENTEARCHIVO_SQL = "UPDATE paciente SET archivo = ?  WHERE id = ?;";
+	private static final String UPDATE_PACIENTE_FOTO_SQL = "UPDATE paciente SET foto = ?  WHERE id = ?;";
+	
 	private static final String SELECT_PACIENTE_BY_ID = "SELECT * FROM paciente WHERE id = ?;";
 	private static final String SELECT_PACIENTE_BY_ODONTOLOGO = "SELECT * FROM paciente WHERE id_odontologo = ?;";
 	private static final String SELECT_ALL_PACIENTES = "SELECT * FROM paciente;";
@@ -71,26 +72,26 @@ public class PacienteDaoPostgreSQL implements PacienteDao {
 			preparedStatement.setString(5, paciente.getEmail());
 			preparedStatement.setString(6, paciente.getTelefono());
 			preparedStatement.setInt(7, paciente.getOdontologo().getId());
-			preparedStatement.setString(8, paciente.getFoto());
-			preparedStatement.setString(9, paciente.getFechanacimiento());
-			preparedStatement.setString(10, paciente.getGenero());
-			preparedStatement.setInt(11, paciente.getId());
+			preparedStatement.setString(8, paciente.getFechanacimiento());
+			preparedStatement.setString(9, paciente.getGenero());
+			preparedStatement.setInt(10, paciente.getId());
 			conexion.execute();
 		} catch (SQLException e) {
 			System.out.println("error");
 		}
 	}
 	
-	public void updateArchivo(Paciente paciente) throws SQLException {
+	public void updateFoto(Paciente paciente)  throws SQLException {
 		try {
-			PreparedStatement preparedStatement = (PreparedStatement) conexion.setPreparedStatement(UPDATE_PACIENTEARCHIVO_SQL);
-			preparedStatement.setString(1, paciente.getArchivo());
+			PreparedStatement preparedStatement = (PreparedStatement) conexion.setPreparedStatement(UPDATE_PACIENTE_FOTO_SQL);
+			preparedStatement.setString(1, paciente.getFoto());
 			preparedStatement.setInt(2, paciente.getId());
 			conexion.execute();
 		} catch (SQLException e) {
 			System.out.println("error");
 		}
 	}
+	
 	
 	public List<Paciente> selectAll() {
 		List <Paciente> pacientes = new ArrayList<>();
