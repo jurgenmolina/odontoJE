@@ -112,6 +112,9 @@ public class Servlet extends HttpServlet {
 			case "/updateFotoPaciente":
 				updateFoto(request, response);
 				break;
+			case "/mostrarInfo":
+				mostrarInfo(request, response);
+				break;
 				
 				
 				
@@ -135,6 +138,28 @@ public class Servlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+	}
+	
+	private void mostrarInfo(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, SQLException, IOException {
+		
+		int id = Integer.parseInt(request.getParameter("id"));
+		
+		Cita cita = citaDao.select(id);
+		
+		int i = cita.getOdontologo().getId();
+		Odontologo o = odontologoDao.select(i);
+		cita.setOdontologo(o);
+		
+		int j = cita.getPaciente().getId();
+		Paciente p = pacienteDao.select(j);
+		cita.setPaciente(p);
+		request.setAttribute("cita", cita);
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("mostrar.jsp");
+		dispatcher.forward(request, response);
+		
+		
 	}
 	
 //	Metodo para subir los archivos del paciente y despues actualiza en la base de datos el campo archivo
@@ -169,6 +194,7 @@ public class Servlet extends HttpServlet {
 		String estado = request.getParameter("v");
 		PrintWriter out = response.getWriter();
 		String nomb = request.getParameter("foto");
+		String nomb2 = request.getParameter("foto2");
 		Part arch = request.getPart("archivo");
 		InputStream is = arch.getInputStream();
 		File f = new File("C:/xampp/htdocs/Servidor/archivos/"+nomb);
@@ -182,7 +208,24 @@ public class Servlet extends HttpServlet {
 		ous.close();
 		is.close();
 		
-		Cita cita = new Cita(id, consulta, estado, nomb);
+		
+		
+		Part arch2 = request.getPart("archivo2");
+		InputStream is2 = arch2.getInputStream();
+		File f2 = new File("C:/xampp/htdocs/Servidor/firmas/"+nomb2);
+		FileOutputStream ous2 = new FileOutputStream(f2);
+		int dato2 = is2.read();
+		while(dato2 != -1){
+			ous2.write(dato2);
+			dato2 = is2.read();
+		}
+		
+		ous2.close();
+		is2.close();
+		
+		
+		
+		Cita cita = new Cita(id, consulta, estado, nomb, nomb2);
 		citaDao.updateCita(cita);
 		
 		response.sendRedirect("calendario");

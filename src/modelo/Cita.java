@@ -30,6 +30,8 @@ public class Cita implements Serializable {
 	private String estado;
 	
 	private String archivo;
+	
+	private String firma;
 
 	
 
@@ -62,12 +64,13 @@ public class Cita implements Serializable {
 
 
 
-	public Cita(Integer id, String consulta, String estado, String archivo) {
+	public Cita(Integer id, String consulta, String estado, String archivo, String firma) {
 		super();
 		this.id = id;
 		this.consulta = consulta;
 		this.estado = estado;
 		this.archivo = archivo;
+		this.firma = firma;
 	}
 	
 	

@@ -165,7 +165,9 @@
 					                           
 					                    
 					                    <c:if test="${cita.estado == 't'}">
-					                           <div class="font-weight-600 text-success">Completado</div>
+					                           <div class="font-weight-600 text-success"><a href="mostrarInfo?id=<c:out value='${cita.id}' />">Completado</a></div>
+					                           
+					                           
 					                    </c:if>
                                     
                                     </td>

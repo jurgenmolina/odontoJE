@@ -39,7 +39,6 @@ public class Paciente implements Serializable {
 	
 	private String genero;
 	
-	private String archivo;
 	
 	
 
@@ -76,22 +75,7 @@ public class Paciente implements Serializable {
 		this.genero = genero;
 	}
 
-	public Paciente(Integer id, String tipodocumento, String documento, String nombre, String apellido, String email,
-			String telefono, String foto, Odontologo odontologo, String fechanacimiento, String genero) {
-		super();
-		this.id = id;
-		this.tipodocumento = tipodocumento;
-		this.documento = documento;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.email = email;
-		this.telefono = telefono;
-		this.foto = foto;
-		this.odontologo = odontologo;
-		this.fechanacimiento = fechanacimiento;
-		this.genero = genero;
-	}
-
+	
 
 
 

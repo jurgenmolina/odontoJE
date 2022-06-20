@@ -21,6 +21,8 @@
 <link rel="stylesheet" href="assets/plugins/morris/morris.css">
 
 <link rel="stylesheet" href="assets/css/style.css">
+
+<link rel="stylesheet" href="assets/css/firma.css">
 </head>
 <body>
 
@@ -152,14 +154,38 @@
 					</div>
 					
 					<div class="form-group row">
-						<a href="download/acme-doc-2.0.1.txt" download="${cita.archivo}">${cita.archivo}</a>
-						<label for="exampleFormControlFile1">Archivos (ZIP)</label>
-						<input accept=".zip,.rar,.7zip" type="file" class="form-control-file" id="exampleFormControlFile1" required="required" name="archivo">
+					<div class="mb-3">
+						<a href="http://localhost/Servidor/archivos/${cita.archivo}" download="${cita.archivo}">${cita.archivo}</a>
+						<label for="formFile"  class="form-label">Archivos (ZIP)</label>
+						<input accept=".zip,.rar,.7zip" type="file" class="form-control" id="formFile" required="required" name="archivo">
 						<input type="hidden" name="foto" value="" />
+						
+					</div>
 					</div>
 					
+					
+					
+					<div class="form-group row">
+					<div class="mb-3">
+						<a href="http://localhost/Servidor/firmas/${cita.firma}" download="${cita.firma}">${cita.firma}</a>
+						<label for="formFile"  class="form-label">Firma</label>
+						<input accept=".png" type="file" class="form-control" id="formFile2" required="required" name="archivo2">
+						<input type="hidden" name="foto2" value="" />
+						</div>
+					</div>
+					
+					<br>
+					<br>
+					 <p>Firme a continuación:</p>
+		    		<canvas id="canvas"></canvas>
+	    			 <br>
+	   				 <button id="btnLimpiar">Limpiar</button>
+	   				 <button id="btnDescargar">Descargar</button>
+	    			 <button id="btnGenerarDocumento" disabled></button>
+					
+					
 					<div class="text-end">
-						<button type="submit" class="btn btn-primary" onclick="cargarArchivo(exampleFormControlFile1)">Guardar</button>
+						<button type="submit" class="btn btn-primary" onclick="cargarArchivo(formFile, formFile2)" >Guardar</button>
 					</div>
 					</div>
 					</div>
@@ -173,7 +199,9 @@
 	</div>
 	
 	</div>
+<script src="assets/js/firma.js"></script>
 
+<script src="assets/js/archivo.js"></script>
 
 <script src="assets/js/jquery-3.6.0.min.js"></script>
 
@@ -183,6 +211,6 @@
 
 <script src="assets/js/script.js"></script>
 
-<script src="assets/js/codigo.js"></script>
+
 </body>
 </html>

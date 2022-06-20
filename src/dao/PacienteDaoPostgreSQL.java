@@ -145,11 +145,10 @@ public class PacienteDaoPostgreSQL implements PacienteDao {
 				String foto = rs.getString("foto");
 				String fechanacimiento = rs.getString("fechanacimiento");
 				String genero = rs.getString("genero");
-				String archivo = rs.getString("archivo");
 				int id_Odontologo = rs.getInt("id_odontologo");
 				Odontologo odontologo = new Odontologo();
 				odontologo.setId(id_Odontologo);
-				paciente = new Paciente(id, tipodocumento, documento, nombre, apellido, email,telefono,foto,odontologo, fechanacimiento, genero, archivo);
+				paciente = new Paciente(id, tipodocumento, documento, nombre, apellido, email,telefono,foto,odontologo, fechanacimiento, genero);
 			}
 			
 		} catch (SQLException e) {

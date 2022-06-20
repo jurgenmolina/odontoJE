@@ -141,7 +141,6 @@
 
 <form action="updateFotoPaciente" method="post" name ="formulario" enctype="multipart/form-data">
 <h6>Actualizar foto</h6>
-	<a href="download/acme-doc-2.0.1.txt" download="${paciente.archivo}">${paciente.archivo}</a>
 
 	<div class="form-group row">
 						<c:if test="${paciente != null}">

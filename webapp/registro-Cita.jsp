@@ -144,8 +144,7 @@
 					
 					<div class="form-group row">
 					<label>Fecha Cita</label>
-					<input type="datetime-local" id="date" class="form-control" name="fecha">
-					<span class="form-text text-muted">dd-Mm-yyyy hh:mm:ss --</span>
+					<input type="datetime-local" value="2022-06-19T16:00" id="date" class="form-control" name="fecha">
 					</div>
 					</div>
 					
